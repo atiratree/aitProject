@@ -13,7 +13,12 @@
         </header>
 
         <section>
+            <h4>registration servlet's Info</h4>
+            <%= request.getAttribute("a")%>
+        </section>
+        <section>
                 <h4>Query String</h4>
+
                 <%= request.getQueryString()%>
 
                 <h4>All Values</h4>

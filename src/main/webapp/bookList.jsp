@@ -1,7 +1,8 @@
 <%@ page import="java.sql.Statement" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="ait.Database" %>
-<%@ page import="java.sql.Connection" %><%-- Created by IntelliJ IDEA. --%>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="ait.entity.User" %><%-- Created by IntelliJ IDEA. --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -21,6 +22,13 @@
         <input type="submit" value="Submit">
         <input type="reset" value="Reset">
     </form>
+    <section>
+        <h4>bookList servlet's Info</h4>
+        <% User user = (User) request.getAttribute("bookListUser");%>
+
+        <%= user.getName() + " " + user.getSurname()%>
+    </section>
+
     <%
         try (Connection connection = Database.getConnection()){
             Statement statement = connection.createStatement();
