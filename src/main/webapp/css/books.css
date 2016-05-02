@@ -1,0 +1,12 @@
+#container
+{
+    background-color: chocolate;
+}
+
+#contnetDiv
+{
+    width: auto;
+    height:250px;
+    margin-bottom: 10px;
+    background-color: lavender;
+}
