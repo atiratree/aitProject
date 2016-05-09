@@ -1,5 +1,7 @@
 package ait;
 
+import ait.db.Database;
+import ait.db.Manager;
 import liquibase.Contexts;
 import liquibase.LabelExpression;
 import liquibase.Liquibase;
@@ -9,11 +11,14 @@ import liquibase.resource.ClassLoaderResourceAccessor;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import java.util.logging.Logger;
 
 /**
  * Created by suomiy on 4/23/16.
  */
 public class InitializerListener implements ServletContextListener {
+    private static final Logger log = Logger.getLogger(Manager.class.getName());
+
     public void contextInitialized(ServletContextEvent sce) {
         try {
             System.out.println("init");
@@ -22,7 +27,7 @@ public class InitializerListener implements ServletContextListener {
 
             liquibase.update(new Contexts(), new LabelExpression());
         } catch (Exception e) {
-            e.printStackTrace();
+            log.severe(e.toString());
         }
     }
 

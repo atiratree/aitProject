@@ -24,22 +24,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>signup</servlet-name>
-        <servlet-class>ait.servlet.SignUpServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>signup</servlet-name>
-        <url-pattern>/signup</url-pattern>
-    </servlet-mapping>
-
-
-    <servlet>
-        <servlet-name>bookList</servlet-name>
-        <servlet-class>ait.servlet.BookListServlet</servlet-class>
+        <servlet-name>datasets</servlet-name>
+        <servlet-class>ait.servlet.DatasetsServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>bookList</servlet-name>
+        <servlet-name>datasets</servlet-name>
         <url-pattern></url-pattern>
     </servlet-mapping>
 

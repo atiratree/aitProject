@@ -1,9 +1,11 @@
-package ait;
+package ait.db;
 
 
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * Created by suomiy on 4/23/16.
@@ -13,24 +15,30 @@ public class Database {
      * lookup datasource
      *
      * @return DataSource
-     * @throws Exception in case of a failed lookup
+     * @throws DbException in case of a failed lookup
      */
-    public static DataSource getDataSource() throws Exception {
-        InitialContext cxt = new InitialContext();
-        if (cxt == null) {
-            throw new Exception("No context!");
-        }
+    public static DataSource getDataSource() throws DbException {
+        DataSource ds;
+        try {
+            InitialContext cxt = new InitialContext();
 
-        DataSource ds = (DataSource) cxt.lookup("java:/comp/env/jdbc/postgres");
+            if (cxt == null) {
+                throw new DbException("No context!");
+            }
 
-        if (ds == null) {
-            throw new Exception("Data source not found!");
+            ds = (DataSource) cxt.lookup("java:/comp/env/jdbc/postgres");
+
+            if (ds == null) {
+                throw new DbException("Data source not found!");
+            }
+        } catch (NamingException e) {
+            throw new DbException("Obtaining datasource failed", e);
         }
 
         return ds;
     }
 
-    public static Connection getConnection() throws Exception {
+    public static Connection getConnection() throws DbException, SQLException {
         return getDataSource().getConnection();
     }
 }

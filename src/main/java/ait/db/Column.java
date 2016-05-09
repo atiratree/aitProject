@@ -1,4 +1,4 @@
-package ait.utils;
+package ait.db;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

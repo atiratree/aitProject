@@ -1,13 +1,16 @@
 package ait.entity;
 
+import ait.db.Column;
+import ait.db.Tables;
 import ait.utils.ObjectUtils;
 
 /**
  * Created by suomiy on 4/27/16.
  */
 
-public abstract class IdEntity {
+public abstract class IdEntity implements Tables.IdEntity {
 
+    @Column
     private Long id;
 
     public IdEntity() {

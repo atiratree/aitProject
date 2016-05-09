@@ -1,0 +1,46 @@
+a {
+    cursor: pointer;
+}
+
+.container {
+    margin: 20% auto auto auto;
+}
+
+#signUpButton {
+    margin-top: 2em;
+    margin-right: 0.75em;
+}
+
+.centerVertically {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+.widthFull {
+    width: 100%;
+}
+
+.errorLabel {
+    color: #FF0707;
+}
+
+.block {
+    display: block;
+}
+
+.inline {
+    display: inline-table;
+    vertical-align: middle;
+    margin-bottom: 0.5em;
+    min-width: 14em;
+}
+
+.toggleLogin {
+    padding-right: 1em;
+}
+
+.paddingLeft {
+    padding-left: 1em;
+}
+

@@ -1,7 +1,8 @@
 package ait.servlet;
 
-import ait.entity.User;
-import ait.utils.LoginUtils;
+import ait.servlet.utils.LoginUtils;
+import ait.servlet.utils.Path;
+import ait.servlet.utils.RequestParams;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,25 +16,51 @@ import java.io.IOException;
  */
 @WebServlet(name = "login")
 public class LoginServlet extends HttpServlet {
+    private static final String ACTION_SIGN_UP = "signup";
+    private static final String ACTION_LOGOUT = "logout";
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
+        String email = request.getParameter(RequestParams.EMAIL);
+        String password = request.getParameter(RequestParams.PASSWORD);
+        String action = request.getParameter(RequestParams.ACTION);
+        boolean result = false;
 
-        // if the credentials are correct, redirect to the Books.jsp page
-         //else stay on the same page
-        User user = new User("user", "user");
+        if (ACTION_SIGN_UP.equals(action)) {
+            String firstName = request.getParameter(RequestParams.FIRST_NAME);
+            String surname = request.getParameter(RequestParams.SURNAME);
 
-        if (!email.equalsIgnoreCase("") && email.equalsIgnoreCase("amit@yahoo.com")) {
-            if (!password.equalsIgnoreCase("") && password.equalsIgnoreCase("p")) {
-                // redirect to Books page
-                LoginUtils.login(request, user);
-                response.sendRedirect("/");
+            result = LoginUtils.signUp(request, email, firstName, surname, password);
+            if (!result) {
+                request.setAttribute(RequestParams.EMAIL, email);
+                request.setAttribute(RequestParams.FIRST_NAME, firstName);
+                request.setAttribute(RequestParams.SURNAME, surname);
+                request.setAttribute(LoginUtils.SIGNING_UP_ATTR, true);
+            }
+        } else {
+            result = LoginUtils.login(request, email, password);
+            if (!result) {
+                request.setAttribute(RequestParams.EMAIL, email);
+                request.setAttribute(LoginUtils.SIGNING_UP_ATTR, false);
+            }
+        }
 
-            } else response.sendRedirect("login.html");
-        } else response.sendRedirect("login.html");
+        if (result) {
+            response.sendRedirect(Path.DATASETS_URL);
+        } else {
+            request.getRequestDispatcher(Path.LOGIN_FILE).forward(request, response);
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("login.html").forward(request, response);
+        String action = request.getParameter(RequestParams.ACTION);
+        if (ACTION_LOGOUT.equals(action)) {
+            LoginUtils.logout(request);
+        }
+
+        if (LoginUtils.isLoggedIn(request)) {
+            response.sendRedirect(Path.DATASETS_URL);
+        } else {
+            request.getRequestDispatcher(Path.LOGIN_FILE).forward(request, response);
+        }
     }
 }

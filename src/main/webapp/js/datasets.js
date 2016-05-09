@@ -1,18 +1,14 @@
 /**
  * Created by studamit on 02/05/2016.
  */
-function singIn()
-{
+function login(){
     window.location.replace("login");
 }
 
-// need to implement it
-function signOut()
-{
-
+function logout(){
+    window.location.replace("login?action=logout");
 }
 
-function addToCart()
-{
+function addToCart(){
     window.location.replace("cart");
 }
