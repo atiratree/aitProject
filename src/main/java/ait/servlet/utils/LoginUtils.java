@@ -93,7 +93,7 @@ public class LoginUtils {
         return isLoggedIn(user);
     }
 
-    private static User getUserFromSession(HttpServletRequest request) {
+    public static User getUserFromSession(HttpServletRequest request) {
         return (User) request.getSession().getAttribute(SESSION_USER_ATTR);
     }
 
