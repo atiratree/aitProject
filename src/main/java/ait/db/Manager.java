@@ -23,10 +23,12 @@ public class Manager<E extends IdEntity> {
     private Class<E> clazz;
 
     private final String TABLE;
+    private final String CLASS_NAME;
 
     public Manager(Class<E> clazz) {
         this.clazz = clazz;
-        TABLE = clazz.getSimpleName();
+        CLASS_NAME = clazz.getSimpleName();
+        TABLE = Utils.convertToDbString(CLASS_NAME);
     }
 
     public E create(E entity) throws DbException {
@@ -51,7 +53,7 @@ public class Manager<E extends IdEntity> {
             if (rs.next()) {
                 result.setId(rs.getLong(ID_COLUMN));
             } else {
-                throw new DbException("Creating object" + TABLE + " failed, no generated key obtained.");
+                throw new DbException("Creating object" + CLASS_NAME + " failed, no generated key obtained.");
             }
         } catch (SQLException ex) {
             throw new DbException(ex);
@@ -78,7 +80,7 @@ public class Manager<E extends IdEntity> {
             setStatementValues(statement, conditionBuilder.getConditionArgs());
 
             if (statement.executeUpdate() > 1) {
-                log.warning("Deleted more entities than one in " + TABLE);
+                log.warning("Deleted more entities than one in " + CLASS_NAME);
             }
         } catch (SQLException ex) {
             throw new DbException(ex);
@@ -103,13 +105,17 @@ public class Manager<E extends IdEntity> {
         return find(cb.limit(1)).stream().findFirst().orElse(null);
     }
 
+    public List<E> findAll() {
+        return find(null);
+    }
+
     public List<E> find(ConditionBuilder conditionBuilder) {
         String findQuery = buildSelectQuery(conditionBuilder);
         List<E> result = new ArrayList<>();
 
         try (Connection con = Database.getConnection();
              PreparedStatement statement = con.prepareStatement(findQuery)) {
-            setStatementValues(statement, conditionBuilder.getConditionArgs());
+            setStatementValues(statement, conditionBuilder == null ? null : conditionBuilder.getConditionArgs());
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -118,7 +124,7 @@ public class Manager<E extends IdEntity> {
                     Utils.setObjectFromResultSet(rs, newObject);
                     result.add(newObject);
                 } catch (Exception e) {
-                    log.severe("Could not instantiate " + TABLE);
+                    log.severe("Could not instantiate " + CLASS_NAME);
                 }
             }
         } catch (Exception ex) {
@@ -140,6 +146,10 @@ public class Manager<E extends IdEntity> {
     }
 
     private void setStatementValues(PreparedStatement statement, List<?> entryList) throws SQLException {
+        if(entryList == null){
+            return;
+        }
+
         for (int i = 0; i < entryList.size(); i++) {
             statement.setObject(i + 1, entryList.get(i));
         }
@@ -151,7 +161,11 @@ public class Manager<E extends IdEntity> {
     }
 
     private String buildSelectQuery(ConditionBuilder conditionBuilder) {
-        return String.format("SELECT * FROM %s.%s WHERE %s", Tables.SCHEMA_NAME, TABLE, conditionBuilder.getCondition());
+        String condition = "";
+        if (conditionBuilder != null && conditionBuilder.getConditionArgs().size() > 0) {
+            condition = String.format(" WHERE %s", conditionBuilder.getCondition());
+        }
+        return String.format("SELECT * FROM %s.%s%s", Tables.SCHEMA_NAME, TABLE, condition);
     }
 
 

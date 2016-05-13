@@ -3,6 +3,8 @@ package ait.db;
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -23,9 +25,12 @@ public class Utils {
     public static LinkedHashMap<String, Object> getColumnsData(Object object) {
         List<Field> fields = getAllDbFieldsAsAccessible(object.getClass());
 
-        return fields.stream().collect(LinkedHashMap::new, (m, v) -> {
+        return fields.stream().collect(LinkedHashMap::new, (m, field) -> {
             try {
-                m.put(convertToDbColumn(v.getName()), v.get(object));
+                Object entry = convertToDbEntry(field, field.get(object));
+                String entryName = convertToDbString(field.getName());
+
+                m.put(entryName, entry);
             } catch (IllegalAccessException e) {
                 log.severe(e.toString());
                 throw new IllegalStateException(e);
@@ -38,7 +43,10 @@ public class Utils {
 
         fields.forEach(field -> {
                     try {
-                        field.set(object, rs.getObject(convertToDbColumn(field.getName())));
+                        Object entry = rs.getObject(convertToDbString(field.getName()));
+                        entry = convertFromDbEntry(field, entry);
+
+                        field.set(object, entry);
                     } catch (SQLException | IllegalAccessException e) {
                         log.severe(e.toString());
                         throw new IllegalStateException(e);
@@ -47,15 +55,50 @@ public class Utils {
         );
     }
 
-    private static String convertToDbColumn(String field) {
+    private static Object convertFromDbEntry(Field field, Object value) {
+        Object result;
+
+        if (field.getType().isEnum()) {
+            Object[] enumConstants = field.getType().getEnumConstants();
+            result = enumConstants[(int) value];
+        } else if (field.getType() == OffsetDateTime.class && value instanceof Timestamp) {// in db as TIMESTAMP WITH TIME ZONE
+            result = OffsetDateTime.parse(((Timestamp) value).toInstant().toString());
+        } else {
+            result = value;
+        }
+
+        return result;
+    }
+
+    private static Object convertToDbEntry(Field field, Object value) throws IllegalAccessException {
+        Object result;
+
+        if (field.getType().isEnum()) {
+            Enum<? extends Enum> anEnum = (Enum<? extends Enum>) value;
+            result = anEnum.ordinal();
+        } else {
+            result = value;
+        }
+
+        return result;
+    }
+
+    public static String convertToDbString(String field) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < field.length(); i++) {
             char c = field.charAt(i);
-            if (Character.isUpperCase(c)) {
-                sb.append('_').append(Character.toLowerCase(c));
+            boolean upper = Character.isUpperCase(c);
+            char result;
+
+            if (i == 0) {
+                result = upper ? Character.toLowerCase(c) : c;
+            } else if (upper) {
+                sb.append('_');
+                result = Character.toLowerCase(c);
             } else {
-                sb.append(c);
+                result = c;
             }
+            sb.append(result);
         }
 
         return sb.toString();

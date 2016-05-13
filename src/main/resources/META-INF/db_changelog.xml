@@ -19,16 +19,14 @@
     </changeSet>
 
     <changeSet id="ait:2" author="studamits">
-        <createSequence sequenceName="sequence"/>
-
-        <createTable tableName="tempreture">
+        <createTable tableName="temperature">
             <column name="id" type="bigint">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="year" type="integer"/>
             <column name="month" type="integer"/>
-            <column name="measurment_type" type="integer"/>
-            <column name="tempreture" type=" decimal(4,1)"/>
+            <column name="measurement_type" type="integer"/>
+            <column name="temperature" type="decimal(4,1)"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>
