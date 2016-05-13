@@ -29,4 +29,20 @@
             <column name="temperature" type="decimal(4,1)"/>
         </createTable>
     </changeSet>
+
+    <changeSet id="ait:3" author="suomiy">
+        <createTable tableName="shopping_cart">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="status" type="integer"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="ait:4" author="suomiy">
+        <sql endDelimiter=";" stripComments="true">
+            ALTER TABLE public.shopping_cart ADD date timestamp with time zone;
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>
