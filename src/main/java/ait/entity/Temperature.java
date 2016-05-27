@@ -6,7 +6,7 @@ import ait.db.Column;
 /**
  * Created by studamit on 07/05/2016.
  */
-public class Tempreture extends IdEntity {
+public class Temperature extends IdEntity {
 
     public enum MeasurmentType {
         MIN, MAX, AVG
@@ -17,18 +17,18 @@ public class Tempreture extends IdEntity {
     @Column
     private int month;
     @Column
-    private int measurmentType;
+    private int measurementType;
     @Column
-    private double tempreture;
+    private double temperature;
 
-    public Tempreture() {
+    public Temperature() {
     }
 
-    public Tempreture(int year, int month, int measurmentType, double tempreture) {
+    public Temperature(int year, int month, int measurementType, double temperature) {
         this.year = year;
         this.month = month;
-        this.measurmentType = measurmentType;
-        this.tempreture = tempreture;
+        this.measurementType = measurementType;
+        this.temperature = temperature;
     }
 
     public int getYear() {
@@ -40,11 +40,11 @@ public class Tempreture extends IdEntity {
     }
 
     public int getMeasurmentType() {
-        return measurmentType;
+        return measurementType;
     }
 
     public double getTempreture() {
-        return tempreture;
+        return temperature;
     }
 
 }
