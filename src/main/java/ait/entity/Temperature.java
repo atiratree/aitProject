@@ -12,22 +12,65 @@ public class Temperature extends IdEntity {
         MIN, MAX, AVG
     }
 
+    public enum Place {
+        BOLZANO, MERANO, SELVA_VAL_GARDENA
+    }
+
     @Column
     private int year;
+
     @Column
     private int month;
+
     @Column
-    private int measurementType;
+    private MeasurmentType measurementType;
+
     @Column
     private double temperature;
+
+    @Column
+    private Place place;
 
     public Temperature() {
     }
 
-    public Temperature(int year, int month, int measurementType, double temperature) {
-        this.year = year;
-        this.month = month;
+    public Temperature(MeasurmentType measurementType, int month, Place place, double temperature, int year) {
         this.measurementType = measurementType;
+        this.month = month;
+        this.place = place;
+        this.temperature = temperature;
+        this.year = year;
+    }
+
+    public MeasurmentType getMeasurementType() {
+        return measurementType;
+    }
+
+    public void setMeasurementType(MeasurmentType measurementType) {
+        this.measurementType = measurementType;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public Place getPlace() {
+        return place;
+    }
+
+    public void setPlace(Place place) {
+        this.place = place;
+    }
+
+    public double getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(double temperature) {
         this.temperature = temperature;
     }
 
@@ -35,16 +78,7 @@ public class Temperature extends IdEntity {
         return year;
     }
 
-    public int getMonth() {
-        return month;
+    public void setYear(int year) {
+        this.year = year;
     }
-
-    public int getMeasurmentType() {
-        return measurementType;
-    }
-
-    public double getTempreture() {
-        return temperature;
-    }
-
 }

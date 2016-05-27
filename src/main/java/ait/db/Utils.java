@@ -1,6 +1,7 @@
 package ait.db;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -63,6 +64,10 @@ public class Utils {
             result = enumConstants[(int) value];
         } else if (field.getType() == OffsetDateTime.class && value instanceof Timestamp) {// in db as TIMESTAMP WITH TIME ZONE
             result = OffsetDateTime.parse(((Timestamp) value).toInstant().toString());
+        } else if ((field.getType() == Double.class || field.getType() == double.class) && value instanceof BigDecimal) {
+            result = ((BigDecimal) value).doubleValue();
+        } else if ((field.getType() == Float.class || field.getType() == float.class) && value instanceof BigDecimal) {
+            result = ((BigDecimal) value).floatValue();
         } else {
             result = value;
         }
