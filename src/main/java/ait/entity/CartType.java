@@ -7,6 +7,9 @@ public enum CartType {
     TEMPERATURE_MERANO("Temperature :Bolzano", "Here you see the temperature of Bolzano."),
     TEMPERATURE_BOLZANO("Temperature Merano:", "Here you see the temperature of Merano."),
     TEMPERATURE_SELVA_VAL_GARDENA("Temperature: Selva Val Gardena", " temperature of Selva Val Gardena."),
+    TEMPERATURE_MIN_ALL_PLACES("Temperature :All Places", "Here you see the temperature of All Places."),
+    TEMPERATURE_MAX_ALL_PLACES("Temperature :All Places", "Here you see the temperature of All Places."),
+    TEMPERATURE_AVG_ALL_PLACES("Temperature :All Places", "Here you see the temperature of All Places."),
     SALINITY("Salibity of World", "Salinity of world");
 
 

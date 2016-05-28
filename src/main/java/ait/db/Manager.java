@@ -146,7 +146,7 @@ public class Manager<E extends IdEntity> {
     }
 
     private void setStatementValues(PreparedStatement statement, List<?> entryList) throws SQLException {
-        if(entryList == null){
+        if (entryList == null) {
             return;
         }
 

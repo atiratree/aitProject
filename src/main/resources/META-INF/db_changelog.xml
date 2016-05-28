@@ -10483,4 +10483,11 @@
         </sql>
     </changeSet>
 
+    <!-- delete all whole year max, min, averages - month = 13 -->
+    <changeSet id="ait:7" author="suomiy">
+        <delete schemaName="public" tableName="temperature">
+            <where>month = 13</where>
+        </delete>
+    </changeSet>
+
 </databaseChangeLog>

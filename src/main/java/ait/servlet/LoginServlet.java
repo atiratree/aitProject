@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
             String firstName = request.getParameter(RequestParams.FIRST_NAME);
             String surname = request.getParameter(RequestParams.SURNAME);
 
-            result = LoginUtils.signUp(request, email, firstName, surname, password);
+            result = LoginUtils.signUp(request, response, email, firstName, surname, password);
             if (!result) {
                 request.setAttribute(RequestParams.EMAIL, email);
                 request.setAttribute(RequestParams.FIRST_NAME, firstName);
@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
                 request.setAttribute(LoginUtils.SIGNING_UP_ATTR, true);
             }
         } else {
-            result = LoginUtils.login(request, email, password);
+            result = LoginUtils.login(request, response, email, password);
             if (!result) {
                 request.setAttribute(RequestParams.EMAIL, email);
                 request.setAttribute(LoginUtils.SIGNING_UP_ATTR, false);

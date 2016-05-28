@@ -1,10 +1,7 @@
 package ait.db;
 
 import ait.entity.CartItem;
-import ait.entity.ShoppingCart;
-import ait.entity.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

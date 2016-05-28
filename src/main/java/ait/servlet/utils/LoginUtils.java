@@ -5,8 +5,7 @@ import ait.db.Managers;
 import ait.entity.User;
 import org.mindrot.jbcrypt.BCrypt;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.util.logging.Logger;
 
 /**
@@ -19,11 +18,12 @@ public class LoginUtils {
 
     public static final String USER_ATTR = "USER_ATTR";
     public static final String LOGGED_IN_ATTR = "LOGGED_IN_ATTR";
+    public static final String TOKEN = "TOKEN";
     public static final String USERNAME_ATTR = "USERNAME_ATTR";
 
     public static final String SIGNING_UP_ATTR = "SIGNING_UP_ATTR";
 
-    public static boolean login(HttpServletRequest request, String email, String password) {
+    public static boolean login(HttpServletRequest request, HttpServletResponse response, String email, String password) {
         User user = null;
         boolean result = ParamsValidator.validateEmail(request, email);
 
@@ -37,14 +37,14 @@ public class LoginUtils {
         }
 
         if (result) {
-            login(request, user);
+            login(request, response, user);
         } else {
             logout(request);
         }
         return result;
     }
 
-    public static boolean signUp(HttpServletRequest request, String email, String name, String surname, String password) {
+    public static boolean signUp(HttpServletRequest request, HttpServletResponse response, String email, String name, String surname, String password) {
         boolean result = ParamsValidator.validateNewEmail(request, email);
         result = ParamsValidator.validateNewFirstName(request, name) && result;
         result = ParamsValidator.validateNewSurname(request, surname) && result;
@@ -55,7 +55,7 @@ public class LoginUtils {
             User user = new User(email, name, surname, hashed);
             try {
                 Managers.getUserManager().create(user);
-                login(request, user);
+                login(request, response, user);
             } catch (DbException e) {
                 result = false;
                 log.severe(e.toString());
@@ -66,9 +66,13 @@ public class LoginUtils {
     }
 
 
-    private static void login(HttpServletRequest request, User user) {
+    private static void login(HttpServletRequest request, HttpServletResponse response, User user) {
         HttpSession session = request.getSession(true);
-        session.setAttribute(SESSION_USER_ATTR, user);
+        session.setAttribute(SESSION_USER_ATTR, new LoginObject(user));
+
+        Cookie userCookie = new Cookie(TOKEN, OnlineUsers.getUserToken(user));
+        userCookie.setMaxAge(-1); //Store cookie for a session
+        response.addCookie(userCookie);
     }
 
     public static void logout(HttpServletRequest request) {
@@ -95,10 +99,44 @@ public class LoginUtils {
     }
 
     public static User getUserFromSession(HttpServletRequest request) {
-        return (User) request.getSession().getAttribute(SESSION_USER_ATTR);
+        LoginObject object = (LoginObject) request.getSession().getAttribute(SESSION_USER_ATTR);
+        return object == null ? null : object.getUser();
     }
 
     private static boolean isLoggedIn(User user) {
         return user != null;
+    }
+
+    public static class LoginObject implements HttpSessionBindingListener {
+
+        private User user;
+
+        public LoginObject(User user) {
+            this.user = user;
+        }
+
+        public User getUser() {
+            return user;
+        }
+
+        public void setUser(User user) {
+            this.user = user;
+        }
+
+        @Override
+        public void valueBound(HttpSessionBindingEvent event) {
+            LoginObject attribute = (LoginObject) event.getValue();
+            if (attribute != null) {
+                OnlineUsers.addUser(attribute.getUser());
+            }
+        }
+
+        @Override
+        public void valueUnbound(HttpSessionBindingEvent event) {
+            LoginObject attribute = (LoginObject) event.getValue();
+            if (attribute != null) {
+                OnlineUsers.removeUser(attribute.getUser());
+            }
+        }
     }
 }
