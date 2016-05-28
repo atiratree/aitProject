@@ -74,6 +74,7 @@ public class LoginUtils {
     public static void logout(HttpServletRequest request) {
         HttpSession session = request.getSession(true);
         session.removeAttribute(SESSION_USER_ATTR);
+        session.removeAttribute(ShoppingCartUtils.SHOPPING_CART);
     }
 
 

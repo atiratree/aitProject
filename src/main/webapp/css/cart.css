@@ -1,0 +1,26 @@
+.block {
+    display: block;
+}
+
+.inline {
+    display: inline-table;
+    vertical-align: middle;
+    margin-bottom: 0.5em;
+    min-width: 14em;
+}
+
+.container
+{
+    width: 40%;
+    margin:5%;
+}
+
+.well
+{
+    background-color: honeydew;
+
+}
+#signOutButton
+{
+    float: right;
+}

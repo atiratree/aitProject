@@ -43,6 +43,36 @@
         <url-pattern>/cart</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>buy</servlet-name>
+        <servlet-class>ait.servlet.BuyServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>buy</servlet-name>
+        <url-pattern>/buy</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addToCart</servlet-name>
+        <servlet-class>ait.servlet.AddToCart</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>addToCart</servlet-name>
+        <url-pattern>/addToCart</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>boughtItems</servlet-name>
+        <servlet-class>ait.servlet.BoughtItemsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>boughtItems</servlet-name>
+        <url-pattern>/boughtItems</url-pattern>
+    </servlet-mapping>
+
     <listener>
         <listener-class>ait.InitializerListener</listener-class>
     </listener>
