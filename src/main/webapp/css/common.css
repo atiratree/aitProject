@@ -1,0 +1,11 @@
+.block {
+    display: block;
+}
+
+.paddingLeft {
+    padding-left: 1em;
+}
+
+.widthFull {
+    width: 100%;
+}

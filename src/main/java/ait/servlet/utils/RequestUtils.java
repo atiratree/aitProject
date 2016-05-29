@@ -29,4 +29,8 @@ public class RequestUtils {
         Object object = request.getAttribute(name);
         return object == null ? defaultValue : (int) object;
     }
+
+    public static int getIntParam(HttpServletRequest request, String name) {
+        return getIntParam(request, name, 0);
+    }
 }

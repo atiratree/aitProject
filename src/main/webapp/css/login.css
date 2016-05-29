@@ -17,16 +17,8 @@ a {
     float: none;
 }
 
-.widthFull {
-    width: 100%;
-}
-
 .errorLabel {
     color: #FF0707;
-}
-
-.block {
-    display: block;
 }
 
 .inline {
@@ -40,7 +32,4 @@ a {
     padding-right: 1em;
 }
 
-.paddingLeft {
-    padding-left: 1em;
-}
 

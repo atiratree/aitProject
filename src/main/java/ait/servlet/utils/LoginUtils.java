@@ -2,10 +2,12 @@ package ait.servlet.utils;
 
 import ait.db.DbException;
 import ait.db.Managers;
+import ait.entity.CartType;
 import ait.entity.User;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.servlet.http.*;
+import javax.ws.rs.NotAuthorizedException;
 import java.util.logging.Logger;
 
 /**
@@ -96,6 +98,14 @@ public class LoginUtils {
     public static boolean isLoggedIn(HttpServletRequest request) {
         User user = getUserFromSession(request);
         return isLoggedIn(user);
+    }
+
+    public static void checkAuthorization(CartType type, HttpServletRequest request) {
+        User user = getUserFromSession(request);
+
+        if (!ShoppingCartUtils.hasItemBought(user, type)) {
+            throw new NotAuthorizedException("No access to this resource!");
+        }
     }
 
     public static User getUserFromSession(HttpServletRequest request) {

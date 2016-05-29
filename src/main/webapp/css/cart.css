@@ -9,18 +9,16 @@
     min-width: 14em;
 }
 
-.container
-{
+.container {
     width: 40%;
-    margin:5%;
+    margin: 5%;
 }
 
-.well
-{
+.well {
     background-color: honeydew;
 
 }
-#signOutButton
-{
+
+#signOutButton {
     float: right;
 }

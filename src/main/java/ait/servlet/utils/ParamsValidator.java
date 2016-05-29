@@ -1,6 +1,7 @@
 package ait.servlet.utils;
 
 import ait.db.Managers;
+import ait.entity.CartType;
 import ait.entity.User;
 import ait.utils.ObjectUtils;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -78,6 +79,15 @@ public class ParamsValidator {
         evaluateErrorMessage(request, valid, ParamsValidator.NEW_SURNAME_VALIDITY,
                 ParamsValidator.INVALID_NEW_SURNAME_MSG, EMPTY_STRING);
         return valid;
+    }
+
+    public static boolean validateVisualisation(HttpServletRequest request, String visualisation) {
+        try {
+            LoginUtils.checkAuthorization(CartType.valueOf(visualisation), request);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
     }
 
     private static void evaluateErrorMessage(HttpServletRequest request, boolean valid, String validityAttrName, String msgAttrName, String msgValueName) {

@@ -6,10 +6,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./js/lib/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="./css/login.css">
+    <link rel="stylesheet" type="text/css" href="./css/common.css">
+    <script src="./js/lib/jquery.min.js"></script>
     <script src="./js/login.js"></script>
     <title>Login</title>
 </head>
@@ -36,7 +36,7 @@
                 </div>
                 <div class="inline">
                     <input class="pull-right" required type="email" name="email"
-                           value="<%= RequestUtils.getStringParam(request, RequestParams.EMAIL)%>">
+                           value="suomiy@gmail.com<%= RequestUtils.getStringParam(request, RequestParams.EMAIL)%>">
                 </div>
             </div>
             <div class="block">
@@ -44,7 +44,7 @@
                     <label>Password</label>
                 </div>
                 <div class="inline">
-                    <input class="pull-right" required type="password" name="password"/>
+                    <input class="pull-right" required type="password" name="password" value="suomi"/>
                 </div>
             </div>
             <% if (!RequestUtils.getBooleanParam(request, ParamsValidator.CREDENTIALS_VALIDITY, true)) {%>

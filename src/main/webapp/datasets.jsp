@@ -1,24 +1,19 @@
-<%@ page import="ait.servlet.utils.LoginUtils" %>
-<%@ page import="ait.servlet.utils.RequestUtils" %>
-<%@ page import="ait.entity.User" %>
-<%@ page import="ait.entity.CartItem" %>
-<%@ page import="ait.servlet.utils.ShoppingCartUtils" %>
-<%@ page import="ait.entity.ShoppingCart" %>
 <%@ page import="ait.entity.CartType" %>
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="ait.entity.User" %>
+<%@ page import="ait.servlet.utils.LoginUtils" %>
+<%@ page import="ait.servlet.utils.ShoppingCartUtils" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
 <head>
     <title></title>
+    <link rel="stylesheet" type="text/css" href="./js/lib/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="./css/datasets.css">
+    <script src="./js/lib/jquery.min.js"></script>
+    <script src="./js/common.js"></script>
     <script src="./js/datasets.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
 </head>
 <body style="width: 50%;">
 

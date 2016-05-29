@@ -22,13 +22,11 @@ public enum CartType {
         this.description = description;
     }
 
-    public String getLabel()
-    {
+    public String getLabel() {
         return label;
     }
 
-    public String getDescription()
-    {
+    public String getDescription() {
         return description;
     }
 }

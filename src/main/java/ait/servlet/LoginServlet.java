@@ -1,5 +1,6 @@
 package ait.servlet;
 
+import ait.entity.CartType;
 import ait.servlet.utils.LoginUtils;
 import ait.servlet.utils.Path;
 import ait.servlet.utils.RequestParams;

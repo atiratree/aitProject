@@ -1,11 +1,10 @@
-<%@ page import="ait.servlet.utils.LoginUtils" %>
-<%@ page import="ait.entity.User" %>
-<%@ page import="ait.entity.ShoppingCart" %>
-<%@ page import="java.util.List" %>
-<%@ page import="ait.db.ShoppingCartManager" %>
-<%@ page import="ait.servlet.utils.ShoppingCartUtils" %>
 <%@ page import="ait.entity.CartItem" %>
-<%@ page import="ait.entity.CartType" %><%--
+<%@ page import="ait.entity.ShoppingCart" %>
+<%@ page import="ait.entity.User" %>
+<%@ page import="ait.servlet.utils.LoginUtils" %>
+<%@ page import="ait.servlet.utils.ShoppingCartUtils" %>
+<%@ page import="java.util.List" %>
+<%--
   Created by IntelliJ IDEA.
   User: studamit
   Date: 28/05/2016
@@ -16,12 +15,12 @@
 <html>
 <head>
     <title>Bought Item</title>
+    <link rel="stylesheet" type="text/css" href="./js/lib/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="./css/tempreture.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="./js/lib/jquery.min.js"></script>
+    <script src="./js/common.js"></script>
     <script src="./js/boughtItems.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/cart.css">
 </head>
