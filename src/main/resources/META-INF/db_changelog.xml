@@ -56,7 +56,7 @@
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="shopping_cart_id" type="integer"/>
-            <column name="cart_type" type="integer"/>
+            <column name="visualisation" type="integer"/>
         </createTable>
 
         <addForeignKeyConstraint baseColumnNames="shopping_cart_id"

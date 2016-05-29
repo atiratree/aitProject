@@ -9,14 +9,14 @@ package ait.servlet.utils;
  */
 public interface Path {
     String DATASETS_URL = "/";
-    String DATASETS_FILE = "datasets.jsp";
+    String DATASETS_FILE = "pages/datasets.jsp";
     String LOGIN_URL = "/login";
-    String LOGIN_FILE = "login.jsp";
+    String LOGIN_FILE = "pages/login.jsp";
+    String ADD_TO_CART_URL = "/addToCart";
     String CART_URL = "/cart";
-    String CART_File = "cart.jsp";
-    String BUY_URL = "/buy";
-    String BOUGHT_ITEMS_FILE = "boughtItems.jsp";
-    String BOUGHT_ITEMS_URL = "/boughtItems";
+    String CART_FILE = "pages/cart.jsp";
+    String ORDER_HISTORY_URL = "/orderHistory";
+    String ORDER_HISTORY_FILE = "pages/orderHistory.jsp";
     String VISUALISATION_URL = "/visualisation";
-    String VISUALISATION_FILE = "visualisation.jsp";
+    String VISUALISATION_FILE = "pages/visualisation.jsp";
 }

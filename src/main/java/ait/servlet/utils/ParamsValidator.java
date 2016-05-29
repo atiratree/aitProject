@@ -1,8 +1,8 @@
 package ait.servlet.utils;
 
 import ait.db.Managers;
-import ait.entity.CartType;
 import ait.entity.User;
+import ait.entity.Visualisation;
 import ait.utils.ObjectUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.mindrot.jbcrypt.BCrypt;
@@ -124,12 +124,20 @@ public class ParamsValidator {
      * @param visualisation: Validating visualisation.
      * @return: ture if the visualisation is valid or vice-versa.
      */
-    public static boolean validateVisualisation(HttpServletRequest request, String visualisation) {
+    public static boolean validateVisualisationAuthorization(HttpServletRequest request, String visualisation) {
         try {
-            LoginUtils.checkAuthorization(CartType.valueOf(visualisation), request);
+            LoginUtils.checkAuthorization(request, Visualisation.valueOf(visualisation));
             return true;
         } catch (Exception ex) {
             return false;
+        }
+    }
+
+    public static Visualisation validateVisualisation(String visualisation) {
+        try {
+            return Visualisation.valueOf(visualisation);
+        } catch (Exception ex) {
+            return null;
         }
     }
 

@@ -14,4 +14,6 @@ public interface RequestParams {
     String VISUALISATION_LABEL = "visualisation_label";
     String VISUALISATION_MIN_YEAR = "visualisation_min_year";
     String VISUALISATION_MAX_YEAR = "visualisation_max_year";
+    String BUY = "buy";
+    String DELETE = "delete";
 }

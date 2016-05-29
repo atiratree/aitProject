@@ -13,15 +13,16 @@ import java.io.IOException;
 /**
  * Created by studamit on 28/05/2016.
  */
-@WebServlet(name = "boughtItems")
-public class BoughtItemsServlet extends HttpServlet {
+
+@WebServlet(name = "orderHistory")
+public class OrderHistoryServlet extends HttpServlet {
     /**
      * DoPost function.
      * @param request:HttpServletRequest request
      * @param response:HttpServletResponse response
      * @throws ServletException: in case of failed state.
      * @throws IOException: in case of failed state.
-     */
+     */}
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
@@ -35,7 +36,7 @@ public class BoughtItemsServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (LoginUtils.isLoggedIn(request)) {
-            request.getRequestDispatcher(Path.BOUGHT_ITEMS_FILE).forward(request, response);
+            request.getRequestDispatcher(Path.ORDER_HISTORY_FILE).forward(request, response);
         } else
             request.getRequestDispatcher(Path.LOGIN_FILE).forward(request, response);
     }

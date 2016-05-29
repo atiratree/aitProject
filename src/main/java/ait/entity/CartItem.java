@@ -9,38 +9,41 @@ public class CartItem extends IdEntity {
     public CartItem() {
     }
 
-    public CartItem(long shoppingCartId, CartType cart_type) {
+    public CartItem(Visualisation visualisation) {
+        this.visualisation = visualisation;
+    }
+
+    public CartItem(long shoppingCartId, Visualisation visualisation) {
 
         this.shoppingCartId = shoppingCartId;
-        this.cart_type = cart_type;
+        this.visualisation = visualisation;
     }
 
     @Column
     private long shoppingCartId;
 
     @Column
-    private CartType cart_type;
+    private Visualisation visualisation;
 
-    public long getCartID() {
-        return this.shoppingCartId;
+    public long getShoppingCartId() {
+        return shoppingCartId;
     }
 
-    public void setCartID(int cartId) {
-        this.shoppingCartId = cartId;
+    public void setShoppingCartId(long shoppingCartId) {
+        this.shoppingCartId = shoppingCartId;
     }
 
-    public void setCartType(CartType cart_type) {
-        this.cart_type = cart_type;
+    public Visualisation getVisualisation() {
+        return visualisation;
     }
 
-    public CartType getCart_type() {
-        return this.cart_type;
+    public void setVisualisation(Visualisation visualisation) {
+        this.visualisation = visualisation;
     }
 
     @Override
     public String toString() {
-        int type = cart_type.ordinal();
-        //String.format("Id: %d, %d %s", getId(), getUserID(), getCreationDate().toString());
-        return String.format("CartItem: %d, %d %d", getId(), getCartID(), type);
+        int type = visualisation.ordinal();
+        return String.format("CartItem: %d, %d %d", getId(), getShoppingCartId(), type);
     }
 }

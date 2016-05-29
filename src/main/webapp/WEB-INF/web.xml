@@ -64,7 +64,7 @@
 
     <servlet>
         <servlet-name>addToCart</servlet-name>
-        <servlet-class>ait.servlet.AddToCart</servlet-class>
+        <servlet-class>ait.servlet.AddToCartServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -73,13 +73,13 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>boughtItems</servlet-name>
-        <servlet-class>ait.servlet.BoughtItemsServlet</servlet-class>
+        <servlet-name>orderHistory</servlet-name>
+        <servlet-class>ait.servlet.OrderHistoryServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>boughtItems</servlet-name>
-        <url-pattern>/boughtItems</url-pattern>
+        <servlet-name>orderHistory</servlet-name>
+        <url-pattern>/orderHistory</url-pattern>
     </servlet-mapping>
 
     <listener>

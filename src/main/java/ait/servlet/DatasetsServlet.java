@@ -1,6 +1,7 @@
 package ait.servlet;
 
 import ait.servlet.utils.LoginUtils;
+import ait.servlet.utils.Path;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,6 +22,6 @@ public class DatasetsServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LoginUtils.setLoginAttributes(request);
-        request.getRequestDispatcher("datasets.jsp").forward(request, response);
+        request.getRequestDispatcher(Path.DATASETS_FILE).forward(request, response);
     }
 }

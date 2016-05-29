@@ -1,11 +1,12 @@
 .container {
-    width: 40%;
-    margin-top: 4%;
+    margin: 0 auto auto auto;
+    width: 70%;
+    height: 100%;
 
 }
 
-.loginInfo {
-    display: block;
-    float: right;
+.inline {
+    display: inline-block;
+    vertical-align: bottom;
 }
 

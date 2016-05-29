@@ -1,6 +1,6 @@
 package ait.servlet;
 
-import ait.entity.CartType;
+import ait.entity.Visualisation;
 import ait.servlet.utils.LoginUtils;
 import ait.servlet.utils.ParamsValidator;
 import ait.servlet.utils.Path;
@@ -24,8 +24,8 @@ public class VisualisationServlet extends HttpServlet {
 
         if (LoginUtils.isLoggedIn(request)) {
             String visualisation = request.getParameter(RequestParams.VISUALISATION_ID);
-            if (ParamsValidator.validateVisualisation(request, visualisation)) {
-                CartType type = CartType.valueOf(visualisation);
+            if (ParamsValidator.validateVisualisationAuthorization(request, visualisation)) {
+                Visualisation type = Visualisation.valueOf(visualisation);
                 LoginUtils.setLoginAttributes(request);
                 request.setAttribute(RequestParams.VISUALISATION_ID, type.name());
                 request.setAttribute(RequestParams.VISUALISATION_LABEL, type.getLabel());

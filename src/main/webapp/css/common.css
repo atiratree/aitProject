@@ -2,10 +2,23 @@
     display: block;
 }
 
-.paddingLeft {
-    padding-left: 1em;
-}
-
 .widthFull {
     width: 100%;
+}
+
+.smallMarginLeft {
+    margin-left: 0.5em;
+}
+
+.mediumMarginRight {
+    margin-right: 1em;
+}
+
+.cursorDefault {
+    cursor: default;
+}
+
+
+.minWidth8 {
+    min-width: 8em;
 }

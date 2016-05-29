@@ -2,7 +2,7 @@ package ait.servlet.utils;
 
 import ait.db.DbException;
 import ait.db.Managers;
-import ait.entity.CartType;
+import ait.entity.Visualisation;
 import ait.entity.User;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -93,11 +93,7 @@ public class LoginUtils {
      */
     private static void login(HttpServletRequest request, HttpServletResponse response, User user) {
         HttpSession session = request.getSession(true);
-        session.setAttribute(SESSION_USER_ATTR, new LoginObject(user));
-
-        Cookie userCookie = new Cookie(TOKEN, OnlineUsers.getUserToken(user));
-        userCookie.setMaxAge(-1); //Store cookie for a session
-        response.addCookie(userCookie);
+        session.setAttribute(SESSION_USER_ATTR, user);
     }
 
     /**
@@ -107,7 +103,7 @@ public class LoginUtils {
     public static void logout(HttpServletRequest request) {
         HttpSession session = request.getSession(true);
         session.removeAttribute(SESSION_USER_ATTR);
-        session.removeAttribute(ShoppingCartUtils.SHOPPING_CART);
+        session.removeAttribute(ShoppingUtils.SHOPPING_CART);
     }
 
 
@@ -138,14 +134,12 @@ public class LoginUtils {
 
     /**
      * To checl if the user has access to cart item.
-     * @param type: CartType items whose access to check
      * @param request: HttpServletRequest
+     * @param type: Visualisation items whose access to check
      * throw :new NotAuthorizedException: in case of no authorization of cart item.
      */
-    public static void checkAuthorization(CartType type, HttpServletRequest request) {
-        User user = getUserFromSession(request);
-
-        if (!ShoppingCartUtils.hasItemBought(user, type)) {
+    public static void checkAuthorization(HttpServletRequest request, Visualisation type) {
+        if (!ShoppingUtils.doesUserOwnVisualisation(request, type)) {
             throw new NotAuthorizedException("No access to this resource!");
         }
     }
@@ -156,8 +150,7 @@ public class LoginUtils {
      * @return: user from session.
      */
     public static User getUserFromSession(HttpServletRequest request) {
-        LoginObject object = (LoginObject) request.getSession().getAttribute(SESSION_USER_ATTR);
-        return object == null ? null : object.getUser();
+        return (User) request.getSession().getAttribute(SESSION_USER_ATTR);
     }
 
     /***
@@ -167,39 +160,5 @@ public class LoginUtils {
      */
     private static boolean isLoggedIn(User user) {
         return user != null;
-    }
-
-
-    public static class LoginObject implements HttpSessionBindingListener {
-
-        private User user;
-
-        public LoginObject(User user) {
-            this.user = user;
-        }
-
-        public User getUser() {
-            return user;
-        }
-
-        public void setUser(User user) {
-            this.user = user;
-        }
-
-        @Override
-        public void valueBound(HttpSessionBindingEvent event) {
-            LoginObject attribute = (LoginObject) event.getValue();
-            if (attribute != null) {
-                OnlineUsers.addUser(attribute.getUser());
-            }
-        }
-
-        @Override
-        public void valueUnbound(HttpSessionBindingEvent event) {
-            LoginObject attribute = (LoginObject) event.getValue();
-            if (attribute != null) {
-                OnlineUsers.removeUser(attribute.getUser());
-            }
-        }
     }
 }

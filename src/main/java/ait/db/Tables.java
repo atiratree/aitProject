@@ -37,7 +37,7 @@ public interface Tables {
      */
     interface CartItem extends IdEntity {
         String SHOPPING_CART_ID = "shopping_cart_id";
-        String CART_TYPE = "cart_type";
+        String VISUALISATION = "visualisation";
     }
 
     /**

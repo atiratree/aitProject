@@ -2,7 +2,7 @@
 <%@ page import="ait.entity.ShoppingCart" %>
 <%@ page import="ait.entity.User" %>
 <%@ page import="ait.servlet.utils.LoginUtils" %>
-<%@ page import="ait.servlet.utils.ShoppingCartUtils" %>
+<%@ page import="ait.servlet.utils.ShoppingUtils" %>
 <%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.
@@ -15,14 +15,13 @@
 <html>
 <head>
     <title>Bought Item</title>
-    <link rel="stylesheet" type="text/css" href="./js/lib/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="./css/tempreture.css">
+    <link rel="stylesheet" type="text/css" href="../js/lib/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/tempreture.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="./js/lib/jquery.min.js"></script>
-    <script src="./js/common.js"></script>
-    <script src="./js/boughtItems.js"></script>
-    <link rel="stylesheet" type="text/css" href="./css/cart.css">
+    <script src="../js/lib/jquery.min.js"></script>
+    <script src="../js/common.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/cart.css">
 </head>
 
 <body>
@@ -34,7 +33,7 @@
             User user = LoginUtils.getUserFromSession(request);
             if (isLoggedIn) {
         %>
-        <button type="button" class="btn btn-default" onclick="logOut()">Sign out</button>
+        <button type="button" class="btn btn-default" onclick="logout()">Sign out</button>
         <button type="button" class="btn btn-default" onclick="homeButtonClicked()">Home</button>
         <div class="well">
             <label>Welcome :<% out.println(user.getName()); %></label><br/>
@@ -44,10 +43,10 @@
     </div>
     <div class="panel-group">
         <%
-            List<ShoppingCart> boughtShoppingCart = ShoppingCartUtils.getShoppingCarts(user);
+            List<ShoppingCart> boughtShoppingCart = ShoppingUtils.getShoppingCarts(user);
             if (boughtShoppingCart != null) {
                 for (int i = 0; i < boughtShoppingCart.size(); i++) {
-                    List<CartItem> cartItems = ShoppingCartUtils.getCartItems(boughtShoppingCart.get(i));
+                    List<CartItem> cartItems = ShoppingUtils.getCartItems(boughtShoppingCart.get(i));
 
                     for (int j = 0; j < cartItems.size(); j++) {
         %>
@@ -55,9 +54,9 @@
         <div class="panel panel-default">
             <div class="panel-heading">Cart: <%out.println(boughtShoppingCart.get(i).getCreationDate());%></div>
             <div class="panel-body">
-                <label><%=cartItems.get(j).getCart_type().getLabel()%>
+                <label><%=cartItems.get(j).getVisualisation().getLabel()%>
                 </label><br/>
-                <label><%=cartItems.get(j).getCart_type().getDescription()%>
+                <label><%=cartItems.get(j).getVisualisation().getDescription()%>
                 </label><br/>
             </div>
         </div>

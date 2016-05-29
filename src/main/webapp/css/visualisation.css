@@ -7,10 +7,5 @@
 .inline {
     display: inline-block;
     vertical-align: bottom;
-    margin-right: 1em;
     margin-bottom: 0.5em;
-}
-
-.minWidth8 {
-    min-width: 8em;
 }

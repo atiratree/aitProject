@@ -3,8 +3,8 @@ package ait.resource;
 import ait.db.ConditionBuilder;
 import ait.db.Managers;
 import ait.db.Tables;
-import ait.entity.CartType;
 import ait.entity.Temperature;
+import ait.entity.Visualisation;
 import ait.servlet.utils.LoginUtils;
 import ait.utils.TemperatureMapper;
 
@@ -23,13 +23,12 @@ import java.util.List;
 @Path("/temperature")
 public class TemperatureResource {
 
-    @Secured
     @POST
     @Path("/find")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public List<Temperature> getTemperatures(TemperatureQueryDTO queryDTO, @Context HttpServletRequest request) {
-        LoginUtils.checkAuthorization(queryDTO.getType(), request);
+        LoginUtils.checkAuthorization(request, queryDTO.getType());
 
         ConditionBuilder conditionBuilder = new ConditionBuilder();
         conditionBuilder.where(Tables.Temperature.YEAR, queryDTO.fromYear, conditionBuilder.GREATER_OR_EQUAL);
@@ -42,7 +41,7 @@ public class TemperatureResource {
     private static class TemperatureQueryDTO {
         private int fromYear;
         private int toYear;
-        private CartType type;
+        private Visualisation type;
 
         public int getFromYear() {
             return fromYear;
@@ -60,11 +59,11 @@ public class TemperatureResource {
             this.toYear = toYear;
         }
 
-        public CartType getType() {
+        public Visualisation getType() {
             return type;
         }
 
-        public void setType(CartType type) {
+        public void setType(Visualisation type) {
             this.type = type;
         }
     }
