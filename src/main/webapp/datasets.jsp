@@ -39,13 +39,15 @@
             }
         %>
     </div>
+
+    <%
+        CartType[] items = CartType.values();
+
+        for (CartType type : items) {
+
+    %>
     <div class="panel-group">
-        <%
-            CartType[] items = CartType.values();
 
-            for (CartType type : items) {
-
-        %>
         <div class="panel panel-default">
             <div class="panel-heading"><%out.println(type.getLabel());%></div>
             <div class="panel-body">
@@ -64,18 +66,19 @@
                 </button>
 
                 <%} else {%>
-                <button type="button" class="btn btn-default" onclick="addItemToCart(<%=type.ordinal()%>)">
+                <button type="button" class="btn btn-default" onclick="addItemToCart('<%=type.name()%>')">
                     Add To cart
                 </button>
 
                 <%
-                        }
-                    }
-                %>
+                        }%>
+
             </div>
         </div>
     </div>
-
+<%
+    }
+%>
     <button type="button" class="btn btn-default" onclick="buyItems()">Buy items</button>
     <button type="button" class="btn btn-default" onclick="boughtItems()">Bought Items</button>
 </div>

@@ -12,7 +12,8 @@ function logout(){
 
 function addItemToCart(cartType)
 {
-    window.location = "addToCart?addToCart," + cartType;
+    debugger;
+    window.location = "addToCart?visualisation=" + cartType;
 }
 
 function buyItems() {

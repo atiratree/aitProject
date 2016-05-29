@@ -63,27 +63,16 @@ public class ShoppingCartUtils {
 
     public static void saveCartItemsInDatabase(long shoppingCartId, CartType cartTypes) throws DbException {
 
-            CartItem cartItem = new CartItem(shoppingCartId, cartTypes);
-            Managers.getCartItemManager().create(cartItem);
+        CartItem cartItem = new CartItem(shoppingCartId, cartTypes);
+        Managers.getCartItemManager().create(cartItem);
     }
 
-    public static CartType setCartTypes(String cart) {
-        String[] cartItems = cart.split(",");
-        CartType cartItemType = null;
-
-        if (cartItems[1].equalsIgnoreCase("0"))
-            cartItemType = CartType.TEMPERATURE_MERANO;
-
-        else if (cartItems[1].equalsIgnoreCase("1"))
-            cartItemType = CartType.TEMPERATURE_BOLZANO;
-
-        else if (cartItems[1].equalsIgnoreCase("2"))
-            cartItemType = CartType.TEMPERATURE_SELVA_VAL_GARDENA;
-
-        else if (cartItems[1].equalsIgnoreCase("3"))
-            cartItemType = CartType.SALINITY;
-
-        return cartItemType;
+    public static CartType getCartType(String cartType) {
+        try {
+            return CartType.valueOf(cartType);
+        } catch (IllegalArgumentException x) {
+            return null;
+        }
     }
 
     public static boolean hasItemBought(User user, CartType buyingItem) {

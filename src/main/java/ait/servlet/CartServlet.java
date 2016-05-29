@@ -1,7 +1,6 @@
 package ait.servlet;
 
 import ait.db.DbException;
-import ait.db.Tables;
 import ait.entity.CartType;
 import ait.entity.User;
 import ait.servlet.utils.LoginUtils;
@@ -51,7 +50,7 @@ public class CartServlet extends HttpServlet {
 
                 // handling request of deleting a cart
                 if (carts.contains("deleteItem")) {
-                    CartType deletingCartType = ShoppingCartUtils.setCartTypes(carts);
+                    CartType deletingCartType = ShoppingCartUtils.getCartType(carts);
 
                     if (deletingCartType != null) {
                         ShoppingCartUtils.deleteCartItemsFromSession(request, deletingCartType);

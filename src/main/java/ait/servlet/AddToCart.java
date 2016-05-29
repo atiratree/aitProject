@@ -4,6 +4,7 @@ import ait.entity.CartType;
 import ait.entity.User;
 import ait.servlet.utils.LoginUtils;
 import ait.servlet.utils.Path;
+import ait.servlet.utils.RequestParams;
 import ait.servlet.utils.ShoppingCartUtils;
 
 import javax.servlet.ServletException;
@@ -25,28 +26,26 @@ public class AddToCart extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String carts = request.getQueryString();
+        CartType cartType = ShoppingCartUtils.getCartType(request.getParameter("visualisation"));
         User user = LoginUtils.getUserFromSession(request);
 
         // adding the items into the cart
         if (user != null) {
-            if (carts.contains("addToCart")) {
-                CartType cartType = ShoppingCartUtils.setCartTypes(request.getQueryString());
+            if (cartType != null) {
+                ShoppingCartUtils.saveCartTypeInSession(request,user,cartType);
+            }
 
-                if (cartType != null) {
-                    ShoppingCartUtils.saveCartTypeInSession(request,user,cartType);
-                    request.getRequestDispatcher(Path.DATASETS_FILE).forward(request, response);
-                }
-            }
-            // in case of buying the items
-            else if (carts.contains("buyItems")) {
-                ArrayList<CartType> cartItemsFromSession = ShoppingCartUtils.getCartItemsFromSession(request);
-                if (cartItemsFromSession != null && cartItemsFromSession.size() > 0) {
-                    request.getRequestDispatcher(Path.CART_File).forward(request, response);
-                } else {
-                    request.getRequestDispatcher(Path.DATASETS_FILE).forward(request, response);
-                }
-            }
+            //request.getRequestDispatcher(Path.DATASETS_FILE).forward(request, response);
+            response.sendRedirect(Path.DATASETS_URL);
+//            // in case of buying the items
+//            else if (carts.contains("buyItems")) {
+//                ArrayList<CartType> cartItemsFromSession = ShoppingCartUtils.getCartItemsFromSession(request);
+//                if (cartItemsFromSession != null && cartItemsFromSession.size() > 0) {
+//                    request.getRequestDispatcher(Path.CART_File).forward(request, response);
+//                } else {
+//                    request.getRequestDispatcher(Path.DATASETS_FILE).forward(request, response);
+//                }
+//            }
         } else
             request.getRequestDispatcher(Path.LOGIN_FILE).forward(request, response);
     }

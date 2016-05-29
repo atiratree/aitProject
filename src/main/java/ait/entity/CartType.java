@@ -10,7 +10,7 @@ public enum CartType {
     TEMPERATURE_MIN_ALL_PLACES("Temperature :All Places", "Here you see the temperature of All Places."),
     TEMPERATURE_MAX_ALL_PLACES("Temperature :All Places", "Here you see the temperature of All Places."),
     TEMPERATURE_AVG_ALL_PLACES("Temperature :All Places", "Here you see the temperature of All Places."),
-    SALINITY("Salibity of World", "Salinity of world");
+    SALINITY("Salinity of World", "Salinity of world");
 
 
     private String label;
