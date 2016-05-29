@@ -15,10 +15,24 @@ import java.io.IOException;
  */
 @WebServlet(name = "boughtItems")
 public class BoughtItemsServlet extends HttpServlet {
+    /**
+     * DoPost function.
+     * @param request:HttpServletRequest request
+     * @param response:HttpServletResponse response
+     * @throws ServletException: in case of failed state.
+     * @throws IOException: in case of failed state.
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
+    /**
+     * DoGet function, to buy the items.
+     * @param request:HttpServletRequest request
+     * @param response:HttpServletResponse response
+     * @throws ServletException: in case of failed state.
+     * @throws IOException: in case of failed state.
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (LoginUtils.isLoggedIn(request)) {
             request.getRequestDispatcher(Path.BOUGHT_ITEMS_FILE).forward(request, response);

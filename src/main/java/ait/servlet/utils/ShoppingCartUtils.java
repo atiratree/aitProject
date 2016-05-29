@@ -121,24 +121,6 @@ public class ShoppingCartUtils {
         return itemExist;
     }
 
-    // delete the cart item either from the session or from the database
-    public static boolean isCartItemDeleted(HttpServletRequest request, User user, CartType cartType) throws DbException {
-
-        boolean isItemDeleted = false;
-        boolean isInSession = isItemInSession(request, user, cartType);
-
-        // if the cart is in session then delete form session else if that is in database
-        // then delete from database
-        if (isInSession) {
-            deleteCartItemsFromSession(request, cartType);
-            isItemDeleted = true;
-        } else {
-            deleteCartItemFromDatabse(cartType);
-            isItemDeleted = true;
-        }
-        return isItemDeleted;
-    }
-
     // to delete a item from the session
     public static boolean deleteCartItemsFromSession(HttpServletRequest request, CartType cartType) {
         ArrayList<CartType> cartItems = getCartItemsFromSession(request);
@@ -160,15 +142,5 @@ public class ShoppingCartUtils {
         return isInSession;
     }
 
-    public static boolean deleteCartItemFromDatabse(CartType cartType) throws DbException {
-        boolean isDeleted = false;
-        CartItem deletingItem = Managers.getCartItemManager().findCartByType(cartType.ordinal());
-
-        if (deletingItem != null) {
-            Managers.getCartItemManager().delete(deletingItem);
-            isDeleted = true;
-        }
-        return isDeleted;
-    }
 }
 

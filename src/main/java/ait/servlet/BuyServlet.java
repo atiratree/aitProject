@@ -23,10 +23,24 @@ import java.util.ArrayList;
  */
 @WebServlet(name = "Servlet")
 public class BuyServlet extends HttpServlet {
+    /**
+     * DoPOST function.
+     * @param request:HttpServletRequest request
+     * @param response:HttpServletResponse response
+     * @throws ServletException: In case of failed state.
+     * @throws IOException: In case of failed state.
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
+    /**
+     * DO GET function.
+     * @param request:HttpServletRequest request
+     * @param response:HttpServletResponse response
+     * @throws ServletException: In case of failed state.
+     * @throws IOException: In case of failed state.
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         // save the cart and cart items in the database

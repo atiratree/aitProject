@@ -3,6 +3,10 @@ package ait.servlet.utils;
 /**
  * Created by suomiy on 5/4/16.
  */
+
+/**
+ * Interface for the PATHS.
+ */
 public interface Path {
     String DATASETS_URL = "/";
     String DATASETS_FILE = "datasets.jsp";

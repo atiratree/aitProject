@@ -19,11 +19,28 @@ import java.util.ArrayList;
  * Created by studamit on 27/05/2016.
  */
 @WebServlet(name = "/addToCart")
+/**
+ * Servlet class to add the items into cart.
+ */
 public class AddToCart extends HttpServlet {
+    /**
+     * Do post function.
+     * @param request:HttpServletRequest request
+     * @param response:HttpServletResponse response
+     * @throws ServletException: in case of failed state.
+     * @throws IOException: in case of failed state.
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
+    /**
+     * Do get function. add the items into cart.
+     * @param request:HttpServletRequest request
+     * @param response:HttpServletResponse response
+     * @throws ServletException: in case of failed state.
+     * @throws IOException: n case of failed state.
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         CartType cartType = ShoppingCartUtils.getCartType(request.getParameter("visualisation"));

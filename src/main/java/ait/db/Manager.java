@@ -25,12 +25,21 @@ public class Manager<E extends IdEntity> {
     private final String TABLE;
     private final String CLASS_NAME;
 
+    /**
+     * @param clazz: entity for the constructor
+     */
     public Manager(Class<E> clazz) {
         this.clazz = clazz;
         CLASS_NAME = clazz.getSimpleName();
         TABLE = Utils.convertToDbString(CLASS_NAME);
     }
 
+    /**
+     *Create an entity into the database.
+     * @param entity: creating entity
+     * @return: the created entity from the database
+     * @throws DbException: in case of failed state
+     */
     public E create(E entity) throws DbException {
         checkNotNull(entity);
         checkIsNull(entity.getId());
@@ -62,12 +71,16 @@ public class Manager<E extends IdEntity> {
         return result;
     }
 
-
     public void update(E entity) throws DbException {
         //TODO:
         throw new NotImplementedException();
     }
 
+    /**
+     * Delete an entity from database.
+     * @param entity: entity to delete.
+     * @throws DbException: SQLException in case of failed state.
+     */
     public void delete(E entity) throws DbException {
         checkNotNull(entity);
         checkNotNull(entity.getId());
@@ -87,12 +100,21 @@ public class Manager<E extends IdEntity> {
         }
     }
 
-
+    /**
+     * Find an entity from database.
+     * @param entity: entity to find.
+     * @return: entity from database.
+     */
     public E findOne(E entity) {
         checkNotNull(entity);
         return findOne(entity.getId());
     }
 
+    /**
+     * Find an entity from database with given id.
+     * @param id: Id of the finding entity.
+     * @return: entity from database.
+     */
     public E findOne(Long id) {
         checkNotNull(id);
 
@@ -100,15 +122,29 @@ public class Manager<E extends IdEntity> {
         return findOne(conditionBuilder);
     }
 
+    /**
+     * Find an entity from database with a given condition.
+     * @param conditionBuilder: Condition of the finding entity.
+     * @return: entity from database.
+     */
     public E findOne(ConditionBuilder conditionBuilder) {
         ConditionBuilder cb = (new Cloner()).deepClone(conditionBuilder);
         return find(cb.limit(1)).stream().findFirst().orElse(null);
     }
 
+    /**
+     * Find all the entities from the database.
+     * @return entities from database.
+     */
     public List<E> findAll() {
         return find(null);
     }
 
+    /**
+     * Find entities from database with given condition.
+     * @param conditionBuilder: condition for the finding entities.
+     * @return: list of entities from database.
+     */
     public List<E> find(ConditionBuilder conditionBuilder) {
         String findQuery = buildSelectQuery(conditionBuilder);
         List<E> result = new ArrayList<>();
@@ -134,6 +170,12 @@ public class Manager<E extends IdEntity> {
         return result;
     }
 
+    /**
+     * TODO CHECK//no useage found
+     * @param statement
+     * @param entryList
+     * @throws SQLException
+     */
     private void setCreateStatementValues(PreparedStatement statement, List<Map.Entry<String, Object>> entryList) throws SQLException {
         int valueCounter = 1;
 
@@ -145,6 +187,12 @@ public class Manager<E extends IdEntity> {
         }
     }
 
+    /**
+     * Set the statement values.
+     * @param statement: Statement to set.
+     * @param entryList: a list of entities to set.
+     * @throws SQLException: throws SQL exception in case of failed state.
+     */
     private void setStatementValues(PreparedStatement statement, List<?> entryList) throws SQLException {
         if (entryList == null) {
             return;
@@ -155,11 +203,20 @@ public class Manager<E extends IdEntity> {
         }
     }
 
-
+    /**
+     * To build the delete query.
+     * @param conditionBuilder: Condition builder for the delete query.
+     * @return: query to delete the entity.
+     */
     private String buildDeleteQuery(ConditionBuilder conditionBuilder) {
         return String.format("DELETE FROM %s.%s WHERE %s", Tables.SCHEMA_NAME, TABLE, conditionBuilder.getCondition());
     }
 
+    /**
+     * To build the select query.
+     * @param conditionBuilder: Condition builder for the select query.
+     * @return: query to select the entities.
+     */
     private String buildSelectQuery(ConditionBuilder conditionBuilder) {
         String condition = "";
         if (conditionBuilder != null && conditionBuilder.getConditionArgs().size() > 0) {
