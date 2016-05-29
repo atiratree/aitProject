@@ -22,3 +22,11 @@
 .minWidth8 {
     min-width: 8em;
 }
+
+.well-honey {
+    background-color: honeydew;
+}
+
+.well-blue {
+    background-color: #A9E7F9;
+}

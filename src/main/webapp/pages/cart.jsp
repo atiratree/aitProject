@@ -5,6 +5,7 @@
 <%@ page import="ait.servlet.utils.Path" %>
 <%@ page import="ait.servlet.utils.RequestParams" %>
 <%@ page import="ait.servlet.utils.ShoppingUtils" %>
+<%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.
   User: studamit
@@ -20,14 +21,11 @@
     <link rel="stylesheet" type="text/css" href="../css/datasets.css">
     <link rel="stylesheet" type="text/css" href="../css/common.css">
     <script src="../js/lib/jquery.min.js"></script>
-    <script src="../js/common.js"></script>
-    <link rel="stylesheet" type="text/css" href="../css/cart.css">
+    <script src="../js/common.js"></script>>
 </head>
 
 <body>
 <div class="container">
-
-
     <h1> Visualisation Store
     </h1>
     <div class="block" style="padding-bottom: 2em">
@@ -42,7 +40,7 @@
         <%
             User user = (User) request.getAttribute(LoginUtils.USER_ATTR);
         %>
-        <div class="well">
+        <div class="well well-honey">
             <label>Welcome <%= user.getName() %>
             </label><br/>
             <label>Your cart contains the following items:</label>
@@ -50,7 +48,8 @@
 
         <div class="panel-group">
             <%
-                for (CartItem item : ShoppingUtils.getSessionCart(request).getItems()) {
+                List<CartItem> items = ShoppingUtils.getSessionCart(request).getItems();
+                for (CartItem item : items) {
                     Visualisation visualisation = item.getVisualisation();
             %>
             <div class="panel panel-default">
@@ -74,7 +73,7 @@
         </div>
         <form action="<%=String.format("%s?%s=%s",Path.CART_URL, RequestParams.ACTION, RequestParams.BUY)%>"
               method="post">
-            <button class="btn btn-success minWidth8" style="margin-bottom: 3em">
+            <button class="btn btn-success minWidth8" <%= items.isEmpty() ? "disabled" : "" %> style="margin-bottom: 3em">
                 Buy
             </button>
         </form>

@@ -1,2 +1,2 @@
 # AIT Project
-Basic bookstore server for AIT course
+Basic server for buying visualisation of datasets

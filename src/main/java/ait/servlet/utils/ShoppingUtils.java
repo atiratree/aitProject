@@ -57,11 +57,13 @@ public class ShoppingUtils {
 
     public static void buy(HttpServletRequest request) throws DbException {
         ShoppingCart cart = getSessionCart(request);
-        cart.setUserId(LoginUtils.getUserFromSession(request).getId());
-        cart.setCreationDate(OffsetDateTime.now(ZoneId.of("UTC")));
+        if(!cart.getItems().isEmpty()){
+            cart.setUserId(LoginUtils.getUserFromSession(request).getId());
+            cart.setCreationDate(OffsetDateTime.now(ZoneId.of("UTC")));
 
-        Managers.getShoppingCartManager().create(cart);
-        setSessionCart(request, null);
+            Managers.getShoppingCartManager().create(cart);
+            setSessionCart(request, null);
+        }
     }
 }
 

@@ -1,10 +1,11 @@
 <%@ page import="ait.servlet.utils.RequestParams" %>
 <%@ page import="ait.servlet.utils.RequestUtils" %>
+<%@ page import="ait.servlet.utils.Path" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
 <head>
-    <title></title>
+    <title>Visualisation</title>
     <link rel="stylesheet" type="text/css" href="../js/lib/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../css/visualisation.css">
     <link rel="stylesheet" type="text/css" href="../css/common.css">
@@ -39,6 +40,11 @@
                 </div>
                 <div class="inline smallMarginLeft pull-right">
                     <button type="button" class="btn btn-default" onclick="homeButtonClicked()">Home</button>
+                </div>
+                <div class="inline smallMarginLeft pull-right">
+                    <button type="button" class="btn btn-default" onclick="window.location='<%=Path.ORDER_HISTORY_URL%>'">Order
+                        history
+                    </button>
                 </div>
             </div>
             <div class="block">

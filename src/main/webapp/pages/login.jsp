@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Login</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="../js/lib/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../css/login.css">
@@ -36,7 +37,7 @@
                 </div>
                 <div class="inline">
                     <input class="pull-right" required type="email" name="email"
-                           value="suomiy@gmail.com<%= RequestUtils.getStringParam(request, RequestParams.EMAIL)%>">
+                           value="<%= RequestUtils.getStringParam(request, RequestParams.EMAIL)%>">
                 </div>
             </div>
             <div class="block">
@@ -44,7 +45,7 @@
                     <label>Password</label>
                 </div>
                 <div class="inline">
-                    <input class="pull-right" required type="password" name="password" value="suomi"/>
+                    <input class="pull-right" required type="password" name="password"/>
                 </div>
             </div>
             <% if (!RequestUtils.getBooleanParam(request, ParamsValidator.CREDENTIALS_VALIDITY, true)) {%>

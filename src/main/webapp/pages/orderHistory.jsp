@@ -1,9 +1,12 @@
+<%@ page import="ait.db.Managers" %>
 <%@ page import="ait.entity.CartItem" %>
 <%@ page import="ait.entity.ShoppingCart" %>
 <%@ page import="ait.entity.User" %>
+<%@ page import="ait.entity.Visualisation" %>
 <%@ page import="ait.servlet.utils.LoginUtils" %>
-<%@ page import="ait.servlet.utils.ShoppingUtils" %>
-<%@ page import="java.util.List" %>
+<%@ page import="ait.servlet.utils.Path" %>
+<%@ page import="ait.servlet.utils.RequestParams" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <%--
   Created by IntelliJ IDEA.
   User: studamit
@@ -14,58 +17,62 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Bought Item</title>
+    <title>Order History</title>
     <link rel="stylesheet" type="text/css" href="../js/lib/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../css/tempreture.css">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../css/datasets.css">
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
     <script src="../js/lib/jquery.min.js"></script>
     <script src="../js/common.js"></script>
-    <link rel="stylesheet" type="text/css" href="../css/cart.css">
 </head>
 
 <body>
 <div class="container">
-
-    <div class="loginInfo">
+    <h1> Visualisation Store
+    </h1>
+    <div class="block" style="padding-bottom: 2em">
+        <div class="inline smallMarginLeft pull-right">
+            <button type="button" class="btn btn-default" onclick="homeButtonClicked()">Home</button>
+        </div>
+        <div class="inline smallMarginLeft pull-right">
+            <button type="button" class="btn btn-default" onclick="logout()">Sign out</button>
+        </div>
+    </div>
+    <div class="block" style="margin-top: 3em;">
         <%
-            boolean isLoggedIn = LoginUtils.isLoggedIn(request);
-            User user = LoginUtils.getUserFromSession(request);
-            if (isLoggedIn) {
+            User user = (User) request.getAttribute(LoginUtils.USER_ATTR);
+            DateTimeFormatter formatter = DateTimeFormatter.RFC_1123_DATE_TIME;
         %>
-        <button type="button" class="btn btn-default" onclick="logout()">Sign out</button>
-        <button type="button" class="btn btn-default" onclick="homeButtonClicked()">Home</button>
-        <div class="well">
-            <label>Welcome :<% out.println(user.getName()); %></label><br/>
-            <label>Your bought following items:</label>
+        <div class="well well-blue ">
+            <label>Welcome <%= user.getName() %>
+            </label><br/>
+            <label>Your order history:</label>
         </div>
 
-    </div>
-    <div class="panel-group">
-        <%
-            List<ShoppingCart> boughtShoppingCart = ShoppingUtils.getShoppingCarts(user);
-            if (boughtShoppingCart != null) {
-                for (int i = 0; i < boughtShoppingCart.size(); i++) {
-                    List<CartItem> cartItems = ShoppingUtils.getCartItems(boughtShoppingCart.get(i));
-
-                    for (int j = 0; j < cartItems.size(); j++) {
-        %>
-
-        <div class="panel panel-default">
-            <div class="panel-heading">Cart: <%out.println(boughtShoppingCart.get(i).getCreationDate());%></div>
-            <div class="panel-body">
-                <label><%=cartItems.get(j).getVisualisation().getLabel()%>
-                </label><br/>
-                <label><%=cartItems.get(j).getVisualisation().getDescription()%>
-                </label><br/>
+        <div class="panel-group">
+            <% for (ShoppingCart cart : Managers.getShoppingCartManager().findByUser(user)) { %>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>Cart : <%= formatter.format(cart.getCreationDate())%>
+                    </strong>
+                </div>
+                <div class="panel-body">
+                    <% for (CartItem item : cart.getItems()) {
+                        Visualisation visualisation = item.getVisualisation();
+                    %>
+                    <a href="<%=String.format("%s?%s=%s",Path.VISUALISATION_URL, RequestParams.VISUALISATION_ID, visualisation.name())%>">
+                        <strong><%= visualisation.getLabel()%>
+                        </strong>
+                    </a>
+                    <p>
+                        <%= visualisation.getDescription()%>
+                    </p>
+                    <%
+                        } %>
+                </div>
             </div>
+            <% } %>
         </div>
-        <%
-                    }
-                }
-            }
-        %>
     </div>
-        <%}%>
+</div>
 </body>
 </html>

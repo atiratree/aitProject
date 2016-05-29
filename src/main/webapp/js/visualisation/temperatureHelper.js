@@ -10,7 +10,7 @@ function prepareTemperatureSelects(visId) {
         toYear.append($('<option />').val(i).html(i));
     }
 
-    fromYear.val(maxYear - 10);
+    fromYear.val(maxYear - 5);
 
     function changeVisualisation() {
         var fromYearVal = fromYear.find("option:selected").text();

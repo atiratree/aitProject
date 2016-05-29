@@ -22,7 +22,7 @@ public class OrderHistoryServlet extends HttpServlet {
      * @param response:HttpServletResponse response
      * @throws ServletException: in case of failed state.
      * @throws IOException: in case of failed state.
-     */}
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
@@ -36,8 +36,9 @@ public class OrderHistoryServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (LoginUtils.isLoggedIn(request)) {
+            LoginUtils.setLoginAttributes(request);
             request.getRequestDispatcher(Path.ORDER_HISTORY_FILE).forward(request, response);
         } else
-            request.getRequestDispatcher(Path.LOGIN_FILE).forward(request, response);
+            response.sendRedirect(Path.DATASETS_URL);
     }
 }

@@ -27,6 +27,7 @@ public class ShoppingCartManager extends Manager<ShoppingCart> {
     public List<ShoppingCart> findByUser(User user) {
         ConditionBuilder conditionBuilder = new ConditionBuilder().where(Tables.ShoppingCart.USER_ID, user.getId());
         List<ShoppingCart> shoppingCart = find(conditionBuilder);
+        shoppingCart.sort((c1, c2) -> c2.getCreationDate().compareTo(c1.getCreationDate()));
 
         return shoppingCart;
     }
@@ -49,5 +50,12 @@ public class ShoppingCartManager extends Manager<ShoppingCart> {
         cart.setItems(items);
 
         return cart;
+    }
+
+    @Override
+    public List<ShoppingCart> find(ConditionBuilder conditionBuilder) {
+        List<ShoppingCart> carts = super.find(conditionBuilder);
+        carts.forEach(cart -> cart.setItems(Managers.getCartItemManager().find(cart)));
+        return carts;
     }
 }
