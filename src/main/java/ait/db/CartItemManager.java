@@ -11,22 +11,15 @@ import java.util.List;
  * Created by studamit on 19/05/2016.
  */
 
-/**
- * Manager class for CartItem.
- */
 public class CartItemManager extends Manager<CartItem> {
 
-    /**
-     *
-     */
     public CartItemManager() {
         super(CartItem.class);
     }
 
     /**
-     *
-     * @param shoppingCart : shoppingCart
-     * @return : list of cart items of this shoppingCart
+     * @param shoppingCart shoppingCart
+     * @return list of cart items of this shoppingCart
      */
     public List<CartItem> find(ShoppingCart shoppingCart) {
         ConditionBuilder conditionBuilder = new ConditionBuilder().where(Tables.CartItem.SHOPPING_CART_ID, shoppingCart.getId());
@@ -36,27 +29,25 @@ public class CartItemManager extends Manager<CartItem> {
     }
 
     /**
-     * To get all the visualisation of the user from database.
-     * @param user: finding user's visualisation
-     * @param visualisation: finding visualisation
-     * @return: a list of visualisations from database.
+     * @param user
+     * @param visualisation
+     * @return list of cartItems of this user and this visualisation
      */
     public List<CartItem> find(User user, Visualisation visualisation) {
         return find(user, visualisation, null);
     }
 
     /**
-     * To find the visualisations of the user given the limit of visualisation to extract from database.
-     * @param user: finding user's visualisation
-     * @param visualisation: finding visualisation
-     * @param limit: limit to get the visualisations
-     * @return: a list of visualisations from the database.
+     * @param user
+     * @param visualisation
+     * @param limit         maximum number of CartItems to return
+     * @return list of CartItems of this user and this visualisation
      */
     public List<CartItem> find(User user, Visualisation visualisation, Integer limit) {
         List<Long> cartIds = Managers.getShoppingCartManager().findIdsByUser(user);
         ConditionBuilder conditionBuilder = new ConditionBuilder().where(Tables.CartItem.VISUALISATION, visualisation)
-                .in(Tables.CartItem.SHOPPING_CART_ID,cartIds);
-        if(limit != null){
+                .in(Tables.CartItem.SHOPPING_CART_ID, cartIds);
+        if (limit != null) {
             conditionBuilder.limit(limit);
         }
         return find(conditionBuilder);

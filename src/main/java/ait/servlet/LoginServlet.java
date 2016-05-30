@@ -19,14 +19,6 @@ public class LoginServlet extends HttpServlet {
     private static final String ACTION_SIGN_UP = "signup";
     private static final String ACTION_LOGOUT = "logout";
 
-    /**
-     * ToPost function of the LoginServelt.
-     * To let user sign in and signup.
-     * @param request:HttpServletRequest request
-     * @param response:HttpServletResponse response
-     * @throws ServletException: In case of failed state.
-     * @throws IOException: In case of failed state.
-     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter(RequestParams.EMAIL);
         String password = request.getParameter(RequestParams.PASSWORD);
@@ -59,14 +51,6 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
-    /**
-     * DOGet function of the LoginServlet.
-     * To forward the request to the Login file.
-     * @param request:HttpServletRequest request
-     * @param response: HttpServletResponse response
-     * @throws ServletException: In case of failed state.
-     * @throws IOException: In case of failed state.
-     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter(RequestParams.ACTION);
         if (ACTION_LOGOUT.equals(action)) {

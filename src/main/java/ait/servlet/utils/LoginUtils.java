@@ -2,11 +2,13 @@ package ait.servlet.utils;
 
 import ait.db.DbException;
 import ait.db.Managers;
-import ait.entity.Visualisation;
 import ait.entity.User;
+import ait.entity.Visualisation;
 import org.mindrot.jbcrypt.BCrypt;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.NotAuthorizedException;
 import java.util.logging.Logger;
 
@@ -27,10 +29,11 @@ public class LoginUtils {
 
     /**
      * To let user sign in.
-     * @param request: HTTPServeltRequest request
-     * @param response: HTTPServletResponse response
-     * @param email: Email of the logging user.
-     * @param password: Password of the logging user.
+     *
+     * @param request  HTTPServeltRequest request
+     * @param response HTTPServletResponse response
+     * @param email    Email of the logging user.
+     * @param password Password of the logging user.
      * @return: true if user logged in successfully and vice-versa.
      */
     public static boolean login(HttpServletRequest request, HttpServletResponse response, String email, String password) {
@@ -56,13 +59,14 @@ public class LoginUtils {
 
     /**
      * To let user sign-up.
-     * @param request: HTTPServletRequest request
-     * @param response:HTTPServletResponse response
-     * @param email: Sign-up user's email.
-     * @param name: Sign-up user's name.
-     * @param surname: Sign-up users's surname.
-     * @param password: Sign-up user's password.
-     * @return
+     *
+     * @param request  HTTPServletRequest request
+     * @param response HTTPServletResponse response
+     * @param email    Sign-up user's email.
+     * @param name     Sign-up user's name.
+     * @param surname  Sign-up users's surname.
+     * @param password Sign-up user's password.
+     * @return true if sign up was successful
      */
     public static boolean signUp(HttpServletRequest request, HttpServletResponse response, String email, String name, String surname, String password) {
         boolean result = ParamsValidator.validateNewEmail(request, email);
@@ -86,10 +90,11 @@ public class LoginUtils {
     }
 
     /**
-     * To perform user login and saving the credentials into session.
-     * @param request: HTTPServlet request
-     * @param response:HTTPServlet response
-     * @param user: user to save in session
+     * To perform user login and saving the credentials into the session.
+     *
+     * @param request  HTTPServlet request
+     * @param response HTTPServlet response
+     * @param user     user to save in session
      */
     private static void login(HttpServletRequest request, HttpServletResponse response, User user) {
         HttpSession session = request.getSession(true);
@@ -98,7 +103,8 @@ public class LoginUtils {
 
     /**
      * To perform user log-out.
-     * @param request: HttpServletRequest
+     *
+     * @param request HttpServletRequest
      */
     public static void logout(HttpServletRequest request) {
         HttpSession session = request.getSession(true);
@@ -109,7 +115,8 @@ public class LoginUtils {
 
     /**
      * To save the user's attribute in session.
-     * @param request: HttpServletRequest
+     *
+     * @param request HttpServletRequest
      */
     public static void setLoginAttributes(HttpServletRequest request) {
         User user = getUserFromSession(request);
@@ -124,8 +131,9 @@ public class LoginUtils {
 
     /**
      * To check if the user is logged in.
-     * @param request: HttpServletRequest
-     * @return: true if the user is logged in and vice-versa.
+     *
+     * @param request HttpServletRequest
+     * @return true if the user is logged in and vice-versa.
      */
     public static boolean isLoggedIn(HttpServletRequest request) {
         User user = getUserFromSession(request);
@@ -134,9 +142,10 @@ public class LoginUtils {
 
     /**
      * To checl if the user has access to cart item.
-     * @param request: HttpServletRequest
-     * @param type: Visualisation items whose access to check
-     * throw :new NotAuthorizedException: in case of no authorization of cart item.
+     *
+     * @param request HttpServletRequest
+     * @param type    Visualisation items whose access to check
+     *                throw :new NotAuthorizedException: in case of no authorization of cart item.
      */
     public static void checkAuthorization(HttpServletRequest request, Visualisation type) {
         if (!ShoppingUtils.doesUserOwnVisualisation(request, type)) {
@@ -146,8 +155,9 @@ public class LoginUtils {
 
     /**
      * To get the logged in user from session.
-     * @param request: HttpServletRequest
-     * @return: user from session.
+     *
+     * @param request HttpServletRequest
+     * @return user from session.
      */
     public static User getUserFromSession(HttpServletRequest request) {
         return (User) request.getSession().getAttribute(SESSION_USER_ATTR);
@@ -155,8 +165,9 @@ public class LoginUtils {
 
     /***
      * To check is user is logged in.
-     * @param user: checking user.
-     * @return: logged in user.
+     *
+     * @param user checking user.
+     * @return logged in user.
      */
     private static boolean isLoggedIn(User user) {
         return user != null;

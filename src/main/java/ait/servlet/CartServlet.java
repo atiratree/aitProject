@@ -14,15 +14,6 @@ import java.io.IOException;
 @WebServlet(name = "cart")
 public class CartServlet extends HttpServlet {
 
-    /**
-     * DoPost function of the CartServlet.
-     * To remove the visualisation from the shopping cart, buy the visualisations.
-     * visualisation
-     * @param request:HttpServletRequest request
-     * @param response:HttpServletResponse response
-     * @throws ServletException: In case of failed state.
-     * @throws IOException:In case of failed state.
-     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter(RequestParams.ACTION);
         boolean validRequest = false;

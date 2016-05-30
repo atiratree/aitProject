@@ -14,8 +14,8 @@ public class Database {
     /**
      * lookup datasource
      *
-     * @return: datasource for the postgress database.
      * @throws DbException in case of a failed lookup.
+     * @return: datasource for the postgress database.
      */
     public static DataSource getDataSource() throws DbException {
         DataSource ds;
@@ -39,10 +39,9 @@ public class Database {
     }
 
     /**
-     *
-     * @return: the connection object.
-     * @throws DbException: in case of db exception.
-     * @throws SQLException: in case of SQLException.
+     * @throws DbException
+     * @throws SQLException
+     * @return: the Connection
      */
     public static Connection getConnection() throws DbException, SQLException {
         return getDataSource().getConnection();

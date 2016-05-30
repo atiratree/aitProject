@@ -21,7 +21,7 @@ public class InitializerListener implements ServletContextListener {
 
     public void contextInitialized(ServletContextEvent sce) {
         try {
-            System.out.println("init");
+            // run liquibase changesets
             liquibase.database.Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(Database.getConnection()));
             Liquibase liquibase = new Liquibase("META-INF/db_changelog.xml", new ClassLoaderResourceAccessor(), database);
 

@@ -21,11 +21,6 @@ public class ConditionBuilder {
 
     private String query = "";
 
-    /**
-     *
-     * @param value: id of the condition builder.
-     * @return condition for the
-     */
     public ConditionBuilder id(Long value) {
         return where(ID_COLUMN, value);
     }

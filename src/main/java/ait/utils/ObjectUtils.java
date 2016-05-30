@@ -4,23 +4,21 @@ import ait.entity.IdEntity;
 
 /**
  * Created by suomiy on 4/27/16.
- * Object Untill class.
  */
 public final class ObjectUtils {
 
     /**
-     * To check if two objects are equals.
-     * @param a: first object
-     * @param b:second object
-     * @return true if euqal and vice-versa.
+     * @param a first object
+     * @param b second object
+     * @return true if a equals b
      */
     public static boolean equals(Object a, Object b) {
         return (a == null) ? (b == null) : a.equals(b);
     }
 
     /**
-     * To check if the entity is not null.
-     * @param entity: Checking entity.
+     * @param entity entity
+     * @throws IllegalArgumentException if entity is null
      */
     public static <E extends IdEntity> void checkNotNull(E entity) {
         if (entity == null) {
@@ -29,8 +27,8 @@ public final class ObjectUtils {
     }
 
     /**
-     * To check if the id id not null.
      * @param id: Checking id.
+     * @throws IllegalArgumentException if id is null
      */
     public static void checkNotNull(Long id) {
         if (id == null) {
@@ -39,8 +37,8 @@ public final class ObjectUtils {
     }
 
     /**
-     * To check if the id is null.
      * @param id: Checking id.
+     * @throws IllegalArgumentException if id is not null
      */
     public static void checkIsNull(Long id) {
         if (id != null) {
@@ -49,9 +47,8 @@ public final class ObjectUtils {
     }
 
     /**
-     * To check id the string is empty.
-     * @param a: Checking string.
-     * @return: true is null and vice-versa.
+     * @param a string
+     * @return true if string is empty
      */
     public static boolean isEmpty(String a) {
         return (a == null) || "".equals(a);

@@ -19,14 +19,6 @@ import java.io.IOException;
  */
 @WebServlet(name = "visualisation")
 public class VisualisationServlet extends HttpServlet {
-
-    /**
-     * DoGet function of the VisualisationServlet.
-     * @param request:HttpServletRequest request
-     * @param response:HttpServletResponse response
-     * @throws ServletException: In case of failed state.
-     * @throws IOException: In case of failed state.
-     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean validRequest = false;
 

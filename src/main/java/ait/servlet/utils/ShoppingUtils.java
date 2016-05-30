@@ -18,9 +18,10 @@ public class ShoppingUtils {
 
     /**
      * To check if the visualization is in the session.
-     * @param request:HttpServletRequest reques
-     * @param visualisation: checking Visualisation
-     * @return: true is present and vice-versa.
+     *
+     * @param request       HttpServletRequest reques
+     * @param visualisation checking Visualisation
+     * @return true is present and vice-versa.
      */
     public static boolean isItemInSessionCart(HttpServletRequest request, Visualisation visualisation) {
         return getSessionCart(request).containsVisualisation(visualisation);
@@ -28,9 +29,10 @@ public class ShoppingUtils {
 
     /**
      * To check if user bought the visualisation
-     * @param request: HttpServletRequest request
-     * @param visualisation: checking visualisation
-     * @return: true if present and vice-versa.
+     *
+     * @param request       HttpServletRequest request
+     * @param visualisation checking visualisation
+     * @return true if present and vice-versa.
      */
     public static boolean doesUserOwnVisualisation(HttpServletRequest request, Visualisation visualisation) {
         User user = LoginUtils.getUserFromSession(request);
@@ -39,8 +41,9 @@ public class ShoppingUtils {
 
     /**
      * To add the visualisation into the cart.
-     * @param request: HttpServletRequest request
-     * @param type : adding visualisation
+     *
+     * @param request HttpServletRequest request
+     * @param type    adding visualisation
      */
     public static void addToCart(HttpServletRequest request, Visualisation type) {
         if (doesUserOwnVisualisation(request, type)) {
@@ -54,8 +57,9 @@ public class ShoppingUtils {
 
     /**
      * Remove the visualisation from cart.
-     * @param request: HttpServletRequest request
-     * @param visualisation: removing visualisation
+     *
+     * @param request       HttpServletRequest request
+     * @param visualisation removing visualisation
      */
     public static void removeFromCart(HttpServletRequest request, Visualisation visualisation) {
         ShoppingCart cart = getSessionCart(request);
@@ -64,8 +68,9 @@ public class ShoppingUtils {
 
     /**
      * To get the shopping cart from session..
-     * @param request: HttpServletRequest request
-     * @return: Shopping cart from session.
+     *
+     * @param request HttpServletRequest request
+     * @return Shopping cart from session.
      */
     public static ShoppingCart getSessionCart(HttpServletRequest request) {
         ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute(SHOPPING_CART);
@@ -79,8 +84,9 @@ public class ShoppingUtils {
 
     /**
      * TO set the shopping cart intot the session.
-     * @param request:HttpServletRequest request
-     * @param cart: Setting shopping cart.
+     *
+     * @param request HttpServletRequest request
+     * @param cart    Setting shopping cart.
      */
     private static void setSessionCart(HttpServletRequest request, ShoppingCart cart) {
         request.getSession().setAttribute(SHOPPING_CART, cart);
@@ -88,12 +94,13 @@ public class ShoppingUtils {
 
     /**
      * T buy the cart items.
-     * @param request:HttpServletRequest request
-     * @throws DbException: In case of failed state.
+     *
+     * @param request HttpServletRequest request
+     * @throws DbException
      */
     public static void buy(HttpServletRequest request) throws DbException {
         ShoppingCart cart = getSessionCart(request);
-        if(!cart.getItems().isEmpty()){
+        if (!cart.getItems().isEmpty()) {
             cart.setUserId(LoginUtils.getUserFromSession(request).getId());
             cart.setCreationDate(OffsetDateTime.now(ZoneId.of("UTC")));
 

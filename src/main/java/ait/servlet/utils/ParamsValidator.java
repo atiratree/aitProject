@@ -36,9 +36,10 @@ public class ParamsValidator {
 
     /**
      * To validate the e-mail of the user.
-     * @param request:HttpServletRequest
-     * @param email: Validating email.
-     * @return: true if the e-mail is valid and vice-versa.
+     *
+     * @param request HttpServletRequest
+     * @param email   Validating email.
+     * @return true if the e-mail is valid and vice-versa.
      */
     public static boolean validateEmail(HttpServletRequest request, String email) {
         boolean valid = EmailValidator.getInstance().isValid(email);
@@ -49,10 +50,11 @@ public class ParamsValidator {
 
     /**
      * To validate the password.
-     * @param request: HttpServletRequest request
-     * @param user: User whose password to validate
-     * @param password: Validating password.
-     * @return: true if the password is valid or vice-versa.
+     *
+     * @param request  HttpServletRequest request
+     * @param user     User whose password to validate
+     * @param password Validating password.
+     * @return true if the password is valid or vice-versa.
      */
     public static boolean validatePassword(HttpServletRequest request, User user, String password) {
         boolean valid = user != null && BCrypt.checkpw(password, user.getPasswordHash());
@@ -63,9 +65,10 @@ public class ParamsValidator {
 
     /**
      * To validate the new user's password.
-     * @param request:HttpServletRequest
-     * @param password: Validating password.
-     * @return: true if the password is valid or vice-versa.
+     *
+     * @param request  HttpServletRequest
+     * @param password Validating password.
+     * @return true if the password is valid or vice-versa.
      */
     public static boolean validateNewPassword(HttpServletRequest request, String password) {
         boolean valid = password != null && password.length() >= 5;
@@ -76,8 +79,9 @@ public class ParamsValidator {
 
     /**
      * To validate the new e-mail.
-     * @param request:HttpServletRequest
-     * @param email: Validating e-mail.
+     *
+     * @param request HttpServletRequest
+     * @param email   Validating e-mail.
      * @return true if the emial is valid or vice-versa.
      */
     public static boolean validateNewEmail(HttpServletRequest request, String email) {
@@ -94,9 +98,10 @@ public class ParamsValidator {
 
     /**
      * To validate the new first name.
-     * @param request:HttpServletRequest
-     * @param firstName: first name to validate.
-     * @return: true if the  first name is valid or vice-versa.
+     *
+     * @param request   HttpServletRequest
+     * @param firstName first name to validate.
+     * @return true if the  first name is valid or vice-versa.
      */
     public static boolean validateNewFirstName(HttpServletRequest request, String firstName) {
         boolean valid = !ObjectUtils.isEmpty(firstName);
@@ -107,9 +112,10 @@ public class ParamsValidator {
 
     /**
      * To validate the new surname.
-     * @param request :HttpServletRequest
-     * @param surname: Validating surname
-     * @return: true if the surname is valid or vice-versa.
+     *
+     * @param request HttpServletRequest
+     * @param surname Validating surname
+     * @return true if the surname is valid or vice-versa.
      */
     public static boolean validateNewSurname(HttpServletRequest request, String surname) {
         boolean valid = !ObjectUtils.isEmpty(surname);
@@ -120,9 +126,10 @@ public class ParamsValidator {
 
     /**
      * To validate the visualisation.
-     * @param request:HttpServletRequest
-     * @param visualisation: Validating visualisation.
-     * @return: ture if the visualisation is valid or vice-versa.
+     *
+     * @param request       HttpServletRequest
+     * @param visualisation Validating visualisation.
+     * @return true if the visualisation is valid or vice-versa.
      */
     public static boolean validateVisualisationAuthorization(HttpServletRequest request, String visualisation) {
         try {

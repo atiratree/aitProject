@@ -1,8 +1,8 @@
 package ait.utils;
 
-import ait.entity.Visualisation;
 import ait.entity.Temperature.MeasurmentType;
 import ait.entity.Temperature.Place;
+import ait.entity.Visualisation;
 
 import java.util.Arrays;
 import java.util.HashMap;

@@ -12,17 +12,16 @@ import java.util.stream.Collectors;
  * Created by studamit on 12/05/2016.
  */
 public class ShoppingCartManager extends Manager<ShoppingCart> {
-    /**
-     * ShoppingCart manager constructor.
-     */
+
     public ShoppingCartManager() {
         super(ShoppingCart.class);
     }
 
     /**
      * To get all the shopping carts of the user.
+     *
      * @param user: users whose shopping cart to get from database.
-     * @return: list of shopping cart of user.
+     * @return list of shopping cart of user.
      */
     public List<ShoppingCart> findByUser(User user) {
         ConditionBuilder conditionBuilder = new ConditionBuilder().where(Tables.ShoppingCart.USER_ID, user.getId());
@@ -33,19 +32,19 @@ public class ShoppingCartManager extends Manager<ShoppingCart> {
     }
 
     /**
-     * Find the id's of shopping cart of the user.
-     * @param user
-     * @return
+     * @param user user
+     * @return id's of shopping carts of the user.
      */
     public List<Long> findIdsByUser(User user) {
         return findByUser(user).stream().map(shoppingCart -> shoppingCart.getId()).collect(Collectors.toList());
     }
 
     /**
-     * Create the shopping cart into the database.
+     * Create the shopping cart in the database.
+     *
      * @param entity: creating entity
-     * @return: Created shopping cart from database.
      * @throws DbException
+     * @return Created shopping cart from the database.
      */
     @Override
     public ShoppingCart create(ShoppingCart entity) throws DbException {
@@ -65,8 +64,9 @@ public class ShoppingCartManager extends Manager<ShoppingCart> {
 
     /**
      * Find the shopping cart from database given the condition.
+     *
      * @param conditionBuilder: condition for the finding entities.
-     * @return
+     * @return list of ShoppingCarts
      */
     @Override
     public List<ShoppingCart> find(ConditionBuilder conditionBuilder) {

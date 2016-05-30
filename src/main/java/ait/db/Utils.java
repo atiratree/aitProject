@@ -130,32 +130,3 @@ public class Utils {
         return fields;
     }
 }
-
-   /* /**
-     * @param object
-     * @return map of DB data, LinkedHashMap remembers order of added entries
-     */
-    /*public static void setColumnsData(Object object, List<?> values) throws DbException {
-        LinkedHashMap<String, Object> result = new LinkedHashMap<>();
-
-        for (Field field : getAllFields(object.getClass())) {
-            Column column = field.getAnnotation(Column.class);
-            if (column != null) {
-                Object value = null;
-
-                if (!field.isAccessible()) {
-                    field.setAccessible(true);
-                }
-
-                try {
-                    value = field.get(object);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-
-                result.put(field.getName(), value);
-            }
-        }
-
-        return result;
-    }*/

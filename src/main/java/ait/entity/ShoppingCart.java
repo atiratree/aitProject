@@ -56,7 +56,7 @@ public class ShoppingCart extends IdEntity implements Tables.User {
     /**
      * adds item only if it isn't already in this shopping cart
      *
-     * @param item
+     * @param item item
      */
     public void addItem(CartItem item) {
         Visualisation visualisation = item.getVisualisation();

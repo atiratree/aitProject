@@ -9,7 +9,6 @@ public interface RequestParams {
     String EMAIL = "email";
     String PASSWORD = "password";
     String ACTION = "action";
-    String VISUALISATION = "visualisation";
     String VISUALISATION_ID = "id";
     String VISUALISATION_LABEL = "visualisation_label";
     String VISUALISATION_MIN_YEAR = "visualisation_min_year";

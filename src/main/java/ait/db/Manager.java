@@ -26,7 +26,7 @@ public class Manager<E extends IdEntity> {
     private final String CLASS_NAME;
 
     /**
-     * @param clazz: entity for the constructor
+     * @param clazz: entity type of this manager
      */
     public Manager(Class<E> clazz) {
         this.clazz = clazz;
@@ -35,10 +35,11 @@ public class Manager<E extends IdEntity> {
     }
 
     /**
-     *Create an entity into the database.
-     * @param entity: creating entity
-     * @return: the created entity from the database
-     * @throws DbException: in case of failed state
+     * Create entity in the database.
+     *
+     * @param entity entity
+     * @throws DbException
+     * @return newly created entity with the id
      */
     public E create(E entity) throws DbException {
         checkNotNull(entity);
@@ -77,9 +78,10 @@ public class Manager<E extends IdEntity> {
     }
 
     /**
-     * Delete an entity from database.
-     * @param entity: entity to delete.
-     * @throws DbException: SQLException in case of failed state.
+     * Delete an entity from the database.
+     *
+     * @param entity entity
+     * @throws DbException
      */
     public void delete(E entity) throws DbException {
         checkNotNull(entity);
@@ -101,9 +103,10 @@ public class Manager<E extends IdEntity> {
     }
 
     /**
-     * Find an entity from database.
+     * Find an entity from the database.
+     *
      * @param entity: entity to find.
-     * @return: entity from database.
+     * @return entity from the database.
      */
     public E findOne(E entity) {
         checkNotNull(entity);
@@ -111,9 +114,10 @@ public class Manager<E extends IdEntity> {
     }
 
     /**
-     * Find an entity from database with given id.
-     * @param id: Id of the finding entity.
-     * @return: entity from database.
+     * Find an entity from the database with given id.
+     *
+     * @param id id
+     * @return entity from the database.
      */
     public E findOne(Long id) {
         checkNotNull(id);
@@ -123,9 +127,10 @@ public class Manager<E extends IdEntity> {
     }
 
     /**
-     * Find an entity from database with a given condition.
+     * Find an entity from the database with a given condition.
+     *
      * @param conditionBuilder: Condition of the finding entity.
-     * @return: entity from database.
+     * @return entity from the database.
      */
     public E findOne(ConditionBuilder conditionBuilder) {
         ConditionBuilder cb = (new Cloner()).deepClone(conditionBuilder);
@@ -134,7 +139,8 @@ public class Manager<E extends IdEntity> {
 
     /**
      * Find all the entities from the database.
-     * @return entities from database.
+     *
+     * @return list of entities
      */
     public List<E> findAll() {
         return find(null);
@@ -142,8 +148,9 @@ public class Manager<E extends IdEntity> {
 
     /**
      * Find entities from database with given condition.
+     *
      * @param conditionBuilder: condition for the finding entities.
-     * @return: list of entities from database.
+     * @return list of entities from the database.
      */
     public List<E> find(ConditionBuilder conditionBuilder) {
         String findQuery = buildSelectQuery(conditionBuilder);
@@ -172,9 +179,10 @@ public class Manager<E extends IdEntity> {
 
     /**
      * Set the statement values.
+     *
      * @param statement: Statement to set.
-     * @param entryList: a list of entities to set.
-     * @throws SQLException: throws SQL exception in case of failed state.
+     * @param entryList: a list of objects to set to this statement
+     * @throws SQLException
      */
     private void setStatementValues(PreparedStatement statement, List<?> entryList) throws SQLException {
         if (entryList == null) {
@@ -188,8 +196,9 @@ public class Manager<E extends IdEntity> {
 
     /**
      * To build the delete query.
+     *
      * @param conditionBuilder: Condition builder for the delete query.
-     * @return: query to delete the entity.
+     * @return query to delete the entity.
      */
     private String buildDeleteQuery(ConditionBuilder conditionBuilder) {
         return String.format("DELETE FROM %s.%s WHERE %s", Tables.SCHEMA_NAME, TABLE, conditionBuilder.getCondition());
@@ -197,8 +206,9 @@ public class Manager<E extends IdEntity> {
 
     /**
      * To build the select query.
+     *
      * @param conditionBuilder: Condition builder for the select query.
-     * @return: query to select the entities.
+     * @return query to select the entities.
      */
     private String buildSelectQuery(ConditionBuilder conditionBuilder) {
         String condition = "";
@@ -212,8 +222,8 @@ public class Manager<E extends IdEntity> {
     /**
      * Creates sql statement similar to this "INSERT INTO public.user(id, name) VALUES (nextval(sequence) ,? )";
      *
-     * @param columnNames
-     * @return
+     * @param columnNames set of column names
+     * @return create query
      */
     private String buildCreateQuery(Set<String> columnNames) {
         StringBuilder querySb = new StringBuilder();

@@ -55,7 +55,6 @@ public class TemperatureResource {
     }
 
 
-
     private static class YearQueryDTO {
         private int fromYear;
         private int toYear;
