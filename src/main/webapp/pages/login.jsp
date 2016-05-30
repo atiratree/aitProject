@@ -37,7 +37,7 @@
                 </div>
                 <div class="inline">
                     <input class="pull-right" required type="email" name="email"
-                           value="<%= RequestUtils.getStringParam(request, RequestParams.EMAIL)%>">
+                           value="suomiy@gmail.com<%= RequestUtils.getStringParam(request, RequestParams.EMAIL)%>">
                 </div>
             </div>
             <div class="block">
@@ -45,7 +45,7 @@
                     <label>Password</label>
                 </div>
                 <div class="inline">
-                    <input class="pull-right" required type="password" name="password"/>
+                    <input class="pull-right" required type="password" name="password" value="suomi"/>
                 </div>
             </div>
             <% if (!RequestUtils.getBooleanParam(request, ParamsValidator.CREDENTIALS_VALIDITY, true)) {%>

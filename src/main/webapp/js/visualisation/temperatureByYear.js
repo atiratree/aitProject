@@ -1,6 +1,4 @@
-var lineChart;
-
-function showTemperatures(data) {
+function showYearTemperatures(data) {
     var visId = getResource('visId');
     if (!visId) {
         return
@@ -53,15 +51,15 @@ function showTemperatures(data) {
 
 
         if (options != null) {
-            chartData = prepareData(data, options);
+            chartData = prepareYearTemperaturesData(data, options);
         }
     }
 
-    if (lineChart != null) {
-        lineChart.destroy();
+    if (chart != null) {
+        chart.destroy();
     }
 
-    lineChart = new Chart(getContext(), {
+    chart = new Chart(getContext(), {
         type: 'line',
         data: {
             labels: chartData == null ? [] : chartData.labels,
@@ -84,42 +82,42 @@ function showTemperatures(data) {
     });
 }
 
-function prepareData(data, options) {
+function prepareYearTemperaturesData(data, options) {
     var result = {
         datasets: [],
-        labels: null,
+        labels: null
     };
 
     var first = options.firstItem;
     var second = options.secondItem;
     var third = options.thirdItem;
 
-    var firstData = sortTemperatureObject(filterByAttribute(data, options.filterAttributeName, first.filterValue));
-    var secondData = sortTemperatureObject(filterByAttribute(data, options.filterAttributeName, second.filterValue));
-    var thirdData = sortTemperatureObject(filterByAttribute(data, options.filterAttributeName, third.filterValue));
+    var firstData = sortTemperatureObjects(filterByAttribute(data, options.filterAttributeName, first.filterValue));
+    var secondData = sortTemperatureObjects(filterByAttribute(data, options.filterAttributeName, second.filterValue));
+    var thirdData = sortTemperatureObjects(filterByAttribute(data, options.filterAttributeName, third.filterValue));
 
-    var firstObjs = sortTemperatureObject([getFirstOrNull(firstData), getFirstOrNull(secondData), getFirstOrNull(thirdData)]);
-    var lastObjs = sortTemperatureObject([getLastOrNull(firstData), getLastOrNull(secondData), getLastOrNull(thirdData)]);
+    var firstObjs = sortTemperatureObjects([getFirstOrNull(firstData), getFirstOrNull(secondData), getFirstOrNull(thirdData)]);
+    var lastObjs = sortTemperatureObjects([getLastOrNull(firstData), getLastOrNull(secondData), getLastOrNull(thirdData)]);
 
     var startYear = firstObjs[0].year;
     var startMonth = firstObjs[0].month;
     var endYear = lastObjs[lastObjs.length - 1].year;
     var endMonth = lastObjs[lastObjs.length - 1].month;
 
-    result.labels = getLabels(startYear, startMonth, endYear, endMonth);
+    result.labels = getLabelsByYear(startYear, startMonth, endYear, endMonth);
     result.datasets.push({
         label: first.name,
-        data: getTemperatures(firstData, startYear, startMonth, endYear, endMonth),
+        data: getTemperaturesByYear(firstData, startYear, startMonth, endYear, endMonth),
         borderColor: first.color,
         fill: false
     }, {
         label: second.name,
-        data: getTemperatures(secondData, startYear, startMonth, endYear, endMonth),
+        data: getTemperaturesByYear(secondData, startYear, startMonth, endYear, endMonth),
         borderColor: second.color,
         fill: false
     }, {
         label: third.name,
-        data: getTemperatures(thirdData, startYear, startMonth, endYear, endMonth),
+        data: getTemperaturesByYear(thirdData, startYear, startMonth, endYear, endMonth),
         borderColor: third.color,
         fill: false
     });
@@ -127,7 +125,7 @@ function prepareData(data, options) {
     return result;
 }
 
-function getTemperatures(data, startYear, startMonth, endYear, endMonth) {
+function getTemperaturesByYear(data, startYear, startMonth, endYear, endMonth) {
     if (!data || data.length == 0) {
         return [];
     }
@@ -155,7 +153,7 @@ function getTemperatures(data, startYear, startMonth, endYear, endMonth) {
     return values;
 }
 
-function getLabels(startYear, startMonth, endYear, endMonth) {
+function getLabelsByYear(startYear, startMonth, endYear, endMonth) {
     var labels = [];
     while (startYear <= endYear && startMonth <= endMonth) {
         labels.push(getMonth(startMonth) + ' ' + startYear);
@@ -168,45 +166,4 @@ function getLabels(startYear, startMonth, endYear, endMonth) {
     }
 
     return labels;
-}
-
-function getFirstOrNull(data) {
-    return data.length == 0 ? null : data[0];
-}
-
-function getLastOrNull(data) {
-    return data.length == 0 ? null : data[data.length - 1];
-}
-
-function getMonth(number) {
-    if (isNaN(number) || number < 1 || number > 12) {
-        return "";
-    }
-
-    var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    return monthNames[number - 1];
-}
-
-
-function sortTemperatureObject(data) {
-    return data.filter(function (obj) {
-        return obj != null;
-    }).sort(function (a, b) {
-        if (b.year != a.year) {
-            return a.year - b.year
-        }
-
-        return a.month - b.month;
-    });
-}
-
-function filterByAttribute(data, attribute, value) {
-    return data.filter(function (o) {
-        return o[attribute] == value
-    });
-}
-
-
-function getContext() {
-    return document.getElementById("canvas");
 }

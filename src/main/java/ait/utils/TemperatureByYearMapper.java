@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Created by suomiy on 29/05/16.
  */
-public class TemperatureMapper {
+public class TemperatureByYearMapper {
     private static final Map<Visualisation, List<MeasurmentType>> typeMap = new HashMap<>();
     private static final Map<Visualisation, List<Place>> placeMap = new HashMap<>();
     private static final Map<Visualisation, Integer> minYearMap = new HashMap<>();
@@ -32,7 +32,9 @@ public class TemperatureMapper {
         placeMap.put(Visualisation.TEMPERATURE_MAX_ALL_PLACES, Arrays.asList(Place.BOLZANO, Place.MERANO, Place.SELVA_VAL_GARDENA));
         placeMap.put(Visualisation.TEMPERATURE_AVG_ALL_PLACES, Arrays.asList(Place.BOLZANO, Place.MERANO, Place.SELVA_VAL_GARDENA));
 
-
+        minYearMap.put(Visualisation.MONTH_TEMPERATURE_BOLZANO, 1926);
+        minYearMap.put(Visualisation.MONTH_TEMPERATURE_MERANO, 1983);
+        minYearMap.put(Visualisation.MONTH_TEMPERATURE_SELVA_VAL_GARDENA, 1991);
         minYearMap.put(Visualisation.TEMPERATURE_BOLZANO, 1926);
         minYearMap.put(Visualisation.TEMPERATURE_MERANO, 1983);
         minYearMap.put(Visualisation.TEMPERATURE_SELVA_VAL_GARDENA, 1991);
@@ -52,7 +54,6 @@ public class TemperatureMapper {
     }
 
     public static Integer getMinYear(Visualisation type) {
-        checkType(type);
         return minYearMap.get(type);
     }
 
@@ -70,7 +71,7 @@ public class TemperatureMapper {
             case TEMPERATURE_AVG_ALL_PLACES:
                 break;
             default:
-                throw new IllegalArgumentException("Not a temperature!");
+                throw new IllegalArgumentException("Not a year temperature!");
         }
     }
 }

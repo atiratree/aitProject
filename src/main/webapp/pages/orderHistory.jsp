@@ -64,7 +64,7 @@
                         </strong>
                     </a>
                     <p>
-                        <%= visualisation.getDescription()%>
+                        <i><%= visualisation.getTypeOfGraph()%>:</i> <%= visualisation.getDescription()%>
                     </p>
                     <%
                         } %>

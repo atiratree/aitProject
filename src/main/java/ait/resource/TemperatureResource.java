@@ -6,7 +6,8 @@ import ait.db.Tables;
 import ait.entity.Temperature;
 import ait.entity.Visualisation;
 import ait.servlet.utils.LoginUtils;
-import ait.utils.TemperatureMapper;
+import ait.utils.TemperatureByMonthMapper;
+import ait.utils.TemperatureByYearMapper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -24,21 +25,38 @@ import java.util.List;
 public class TemperatureResource {
 
     @POST
-    @Path("/find")
+    @Path("/findByYear")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Temperature> getTemperatures(TemperatureQueryDTO queryDTO, @Context HttpServletRequest request) {
+    public List<Temperature> getTemperaturesByYear(YearQueryDTO queryDTO, @Context HttpServletRequest request) {
         LoginUtils.checkAuthorization(request, queryDTO.getType());
 
         ConditionBuilder conditionBuilder = new ConditionBuilder();
         conditionBuilder.where(Tables.Temperature.YEAR, queryDTO.fromYear, conditionBuilder.GREATER_OR_EQUAL);
         conditionBuilder.where(Tables.Temperature.YEAR, queryDTO.toYear, conditionBuilder.SMALLER_OR_EQUAL);
-        conditionBuilder.in(Tables.Temperature.MEASUREMENT_TYPE, TemperatureMapper.getMeasurementTypes(queryDTO.type));
-        conditionBuilder.in(Tables.Temperature.PLACE, TemperatureMapper.getPlaces(queryDTO.type));
+        conditionBuilder.in(Tables.Temperature.MEASUREMENT_TYPE, TemperatureByYearMapper.getMeasurementTypes(queryDTO.type));
+        conditionBuilder.in(Tables.Temperature.PLACE, TemperatureByYearMapper.getPlaces(queryDTO.type));
         return Managers.getTemperatureManager().find(conditionBuilder);
     }
 
-    private static class TemperatureQueryDTO {
+    @POST
+    @Path("/findByMonth")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Temperature> getTemperaturesByMonth(MonthQueryDTO queryDTO, @Context HttpServletRequest request) {
+        LoginUtils.checkAuthorization(request, queryDTO.getType());
+
+        ConditionBuilder conditionBuilder = new ConditionBuilder();
+        conditionBuilder.where(Tables.Temperature.MONTH, queryDTO.month);
+        conditionBuilder.where(Tables.Temperature.PLACE, TemperatureByMonthMapper.getPlace(queryDTO.getType()));
+        conditionBuilder.where(Tables.Temperature.MEASUREMENT_TYPE, Temperature.MeasurmentType.AVG);
+
+        return Managers.getTemperatureManager().find(conditionBuilder);
+    }
+
+
+
+    private static class YearQueryDTO {
         private int fromYear;
         private int toYear;
         private Visualisation type;
@@ -57,6 +75,27 @@ public class TemperatureResource {
 
         public void setToYear(int toYear) {
             this.toYear = toYear;
+        }
+
+        public Visualisation getType() {
+            return type;
+        }
+
+        public void setType(Visualisation type) {
+            this.type = type;
+        }
+    }
+
+    private static class MonthQueryDTO {
+        private int month;
+        private Visualisation type;
+
+        public int getMonth() {
+            return month;
+        }
+
+        public void setMonth(int month) {
+            this.month = month;
         }
 
         public Visualisation getType() {

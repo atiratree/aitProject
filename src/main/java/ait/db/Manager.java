@@ -171,23 +171,6 @@ public class Manager<E extends IdEntity> {
     }
 
     /**
-     * TODO CHECK//no useage found
-     * @param statement
-     * @param entryList
-     * @throws SQLException
-     */
-    private void setCreateStatementValues(PreparedStatement statement, List<Map.Entry<String, Object>> entryList) throws SQLException {
-        int valueCounter = 1;
-
-        for (int i = 0; i < entryList.size(); i++) {
-            Map.Entry<String, Object> entry = entryList.get(i);
-            if (!entry.getKey().equals(ID_COLUMN)) {
-                statement.setObject(valueCounter++, entry.getValue());
-            }
-        }
-    }
-
-    /**
      * Set the statement values.
      * @param statement: Statement to set.
      * @param entryList: a list of entities to set.

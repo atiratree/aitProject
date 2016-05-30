@@ -57,7 +57,7 @@
                 </div>
                 <div class="panel-body">
                     <p>
-                        <%= type.getDescription()%>
+                        <i><%= type.getTypeOfGraph()%>:</i> <%= type.getDescription()%>
                     </p>
                     <% if (ShoppingUtils.isItemInSessionCart(request, type)) { %>
                     <button class="btn btn-info" id="temperatureButton" style="cursor: default" disabled>

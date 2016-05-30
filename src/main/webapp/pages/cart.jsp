@@ -59,7 +59,7 @@
                     </strong>
                 </div>
                 <div class="panel-body">
-                    <p><%=visualisation.getDescription()%>
+                    <p><i><%= visualisation.getTypeOfGraph()%>:</i> <%=visualisation.getDescription()%>
                     </p>
                     <form action="<%=String.format("%s?%s=%s",Path.CART_URL, RequestParams.ACTION, RequestParams.DELETE)%>"
                           method="post">

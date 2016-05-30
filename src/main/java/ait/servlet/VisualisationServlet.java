@@ -5,7 +5,7 @@ import ait.servlet.utils.LoginUtils;
 import ait.servlet.utils.ParamsValidator;
 import ait.servlet.utils.Path;
 import ait.servlet.utils.RequestParams;
-import ait.utils.TemperatureMapper;
+import ait.utils.TemperatureByYearMapper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,8 +37,8 @@ public class VisualisationServlet extends HttpServlet {
                 LoginUtils.setLoginAttributes(request);
                 request.setAttribute(RequestParams.VISUALISATION_ID, type.name());
                 request.setAttribute(RequestParams.VISUALISATION_LABEL, type.getLabel());
-                request.setAttribute(RequestParams.VISUALISATION_MIN_YEAR, TemperatureMapper.getMinYear(type));
-                request.setAttribute(RequestParams.VISUALISATION_MAX_YEAR, TemperatureMapper.getMaxYear(type));
+                request.setAttribute(RequestParams.VISUALISATION_MIN_YEAR, TemperatureByYearMapper.getMinYear(type));
+                request.setAttribute(RequestParams.VISUALISATION_MAX_YEAR, TemperatureByYearMapper.getMaxYear(type));
                 request.getRequestDispatcher(Path.VISUALISATION_FILE).forward(request, response);
                 validRequest = true;
             }

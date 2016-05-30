@@ -1,3 +1,5 @@
+var chart;
+
 $(document).ready(function () {
     prepareVisualisation();
     setVisualisation();
@@ -10,10 +12,10 @@ function prepareVisualisation() {
     }
 
     if (visId.startsWith("TEMPERATURE")) {
-        prepareTemperatureSelects(visId);
-    }//else if(visId.startsWith("SALINITY")){
-    //
-    // }
+        prepareYearTemperatureSelects(visId);
+    }else if(visId.startsWith("MONTH_TEMPERATURE")){
+        prepareMonthTemperatureSelects(visId);
+    }
 }
 
 function setVisualisation() {
@@ -21,18 +23,23 @@ function setVisualisation() {
     if (!visId) {
         return
     }
-
+    
     if (visId.startsWith("TEMPERATURE")) {
         var fromYear = $("#fromYearPicker").find("option:selected").text();
         var toYear = $("#toYearPicker").find("option:selected").text();
-        postData('temperature/find',
+        postData('temperature/findByYear',
             {
                 "fromYear": fromYear,
                 "toYear": toYear,
                 "type": visId
             },
-            showTemperatures);
-    }//else if(visId.startsWith("SALINITY")){
-    //
-    // }
+            showYearTemperatures);
+    } else if (visId.startsWith("MONTH_TEMPERATURE")) {
+        var month = $("#monthPicker").find("option:selected").text();
+        postData('temperature/findByMonth',
+            {
+                "month": getMonthsNumber(month),
+                "type": visId
+            },showTemperaturesByMonth);
+    }
 }

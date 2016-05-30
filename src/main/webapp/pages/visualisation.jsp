@@ -13,7 +13,8 @@
     <script src="../js/common.js"></script>
     <script src="../js/lib/Chart.js"></script>
     <script src="../js/visualisation/temperatureHelper.js"></script>
-    <script src="../js/visualisation/temperature.js"></script>
+    <script src="../js/visualisation/temperatureByYear.js"></script>
+    <script src="../js/visualisation/temperatureByMonth.js"></script>
     <script>
         function getResource(resource) {
             switch (resource) {
@@ -48,6 +49,7 @@
                 </div>
             </div>
             <div class="block">
+                <% if (RequestUtils.getStringParam(request, RequestParams.VISUALISATION_ID).startsWith("TEMPERATURE")) {%>
                 <div class="inline mediumMarginRight minWidth8">
                     <label>From Year</label>
                     <select class="form-control widthFull" name="fromYearPicker" id="fromYearPicker"></select>
@@ -56,6 +58,12 @@
                     <label>To Year</label>
                     <select class="form-control widthFull" name="toYearPicker" id="toYearPicker"></select>
                 </div>
+                <% } else{%>
+                <div class="inline mediumMarginRight minWidth8">
+                    <label>Month</label>
+                    <select class="form-control widthFull" name="monthPicker" id="monthPicker"></select>
+                </div>
+                <% }%>
             </div>
         </div>
 
