@@ -32,10 +32,21 @@ public class ShoppingCartManager extends Manager<ShoppingCart> {
         return shoppingCart;
     }
 
+    /**
+     * Find the id's of shopping cart of the user.
+     * @param user
+     * @return
+     */
     public List<Long> findIdsByUser(User user) {
         return findByUser(user).stream().map(shoppingCart -> shoppingCart.getId()).collect(Collectors.toList());
     }
 
+    /**
+     * Create the shopping cart into the database.
+     * @param entity: creating entity
+     * @return: Created shopping cart from database.
+     * @throws DbException
+     */
     @Override
     public ShoppingCart create(ShoppingCart entity) throws DbException {
         ShoppingCart cart = super.create(entity);
@@ -52,6 +63,11 @@ public class ShoppingCartManager extends Manager<ShoppingCart> {
         return cart;
     }
 
+    /**
+     * Find the shopping cart from database given the condition.
+     * @param conditionBuilder: condition for the finding entities.
+     * @return
+     */
     @Override
     public List<ShoppingCart> find(ConditionBuilder conditionBuilder) {
         List<ShoppingCart> carts = super.find(conditionBuilder);

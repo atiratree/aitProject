@@ -18,12 +18,14 @@ import java.io.IOException;
  * Servlet class to add the items into cart.
  */
 public class AddToCartServlet extends HttpServlet {
+
     /**
-     * Do post function.
+     * Do POST function of the AddToCartServlet.
+     * To add the visualisation into the ShoppingCart.
      * @param request:HttpServletRequest request
      * @param response:HttpServletResponse response
-     * @throws ServletException: in case of failed state.
-     * @throws IOException: in case of failed state.
+     * @throws ServletException: In case of failed state.
+     * @throws IOException: In case of failed state.
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean validRequest = false;
@@ -44,11 +46,12 @@ public class AddToCartServlet extends HttpServlet {
     }
 
     /**
-     * Do get function. add the items into cart.
+     * Do get function of the AddToCartServlet.
+     * To forward the request to the Datasets file.
      * @param request:HttpServletRequest request
      * @param response:HttpServletResponse response
      * @throws ServletException: in case of failed state.
-     * @throws IOException: n case of failed state.
+     * @throws IOException: in case of failed state.
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher(Path.DATASETS_FILE).forward(request, response);
