@@ -32,10 +32,10 @@ public class TemperatureResource {
         LoginUtils.checkAuthorization(request, queryDTO.getType());
 
         ConditionBuilder conditionBuilder = new ConditionBuilder();
-        conditionBuilder.where(Tables.Temperature.YEAR, queryDTO.fromYear, conditionBuilder.GREATER_OR_EQUAL);
-        conditionBuilder.where(Tables.Temperature.YEAR, queryDTO.toYear, conditionBuilder.SMALLER_OR_EQUAL);
-        conditionBuilder.in(Tables.Temperature.MEASUREMENT_TYPE, TemperatureByYearMapper.getMeasurementTypes(queryDTO.type));
-        conditionBuilder.in(Tables.Temperature.PLACE, TemperatureByYearMapper.getPlaces(queryDTO.type));
+        conditionBuilder.where(Temperature.YEAR, queryDTO.fromYear, conditionBuilder.GREATER_OR_EQUAL);
+        conditionBuilder.where(Temperature.YEAR, queryDTO.toYear, conditionBuilder.SMALLER_OR_EQUAL);
+        conditionBuilder.in(Temperature.MEASUREMENT_TYPE, TemperatureByYearMapper.getMeasurementTypes(queryDTO.type));
+        conditionBuilder.in(Temperature.PLACE, TemperatureByYearMapper.getPlaces(queryDTO.type));
         return Managers.getTemperatureManager().find(conditionBuilder);
     }
 
@@ -47,9 +47,9 @@ public class TemperatureResource {
         LoginUtils.checkAuthorization(request, queryDTO.getType());
 
         ConditionBuilder conditionBuilder = new ConditionBuilder();
-        conditionBuilder.where(Tables.Temperature.MONTH, queryDTO.month);
-        conditionBuilder.where(Tables.Temperature.PLACE, TemperatureByMonthMapper.getPlace(queryDTO.getType()));
-        conditionBuilder.where(Tables.Temperature.MEASUREMENT_TYPE, Temperature.MeasurmentType.AVG);
+        conditionBuilder.where(Temperature.MONTH, queryDTO.month);
+        conditionBuilder.where(Temperature.PLACE, TemperatureByMonthMapper.getPlace(queryDTO.getType()));
+        conditionBuilder.where(Temperature.MEASUREMENT_TYPE, Temperature.MeasurmentType.AVG);
 
         return Managers.getTemperatureManager().find(conditionBuilder);
     }

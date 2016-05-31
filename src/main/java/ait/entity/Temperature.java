@@ -2,11 +2,12 @@ package ait.entity;
 
 
 import ait.db.Column;
+import ait.db.Tables;
 
 /**
  * Created by studamit on 07/05/2016.
  */
-public class Temperature extends IdEntity {
+public class Temperature extends IdEntity implements Tables.Temperature {
 
     public enum MeasurmentType {
         MIN, MAX, AVG

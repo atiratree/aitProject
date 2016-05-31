@@ -15,7 +15,7 @@ public class UserManager extends Manager<User> {
      * @return user from the database.
      */
     public User findOneByEmail(String email) {
-        ConditionBuilder conditionBuilder = new ConditionBuilder().where(Tables.User.EMAIL, email);
+        ConditionBuilder conditionBuilder = new ConditionBuilder().where(User.EMAIL, email);
         return findOne(conditionBuilder);
     }
 }

@@ -24,7 +24,7 @@ public class ShoppingCartManager extends Manager<ShoppingCart> {
      * @return list of shopping cart of user.
      */
     public List<ShoppingCart> findByUser(User user) {
-        ConditionBuilder conditionBuilder = new ConditionBuilder().where(Tables.ShoppingCart.USER_ID, user.getId());
+        ConditionBuilder conditionBuilder = new ConditionBuilder().where(ShoppingCart.USER_ID, user.getId());
         List<ShoppingCart> shoppingCart = find(conditionBuilder);
         shoppingCart.sort((c1, c2) -> c2.getCreationDate().compareTo(c1.getCreationDate()));
 
@@ -43,8 +43,8 @@ public class ShoppingCartManager extends Manager<ShoppingCart> {
      * Create the shopping cart in the database.
      *
      * @param entity: creating entity
-     * @throws DbException
      * @return Created shopping cart from the database.
+     * @throws DbException
      */
     @Override
     public ShoppingCart create(ShoppingCart entity) throws DbException {

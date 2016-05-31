@@ -22,7 +22,7 @@ public class CartItemManager extends Manager<CartItem> {
      * @return list of cart items of this shoppingCart
      */
     public List<CartItem> find(ShoppingCart shoppingCart) {
-        ConditionBuilder conditionBuilder = new ConditionBuilder().where(Tables.CartItem.SHOPPING_CART_ID, shoppingCart.getId());
+        ConditionBuilder conditionBuilder = new ConditionBuilder().where(CartItem.SHOPPING_CART_ID, shoppingCart.getId());
         List<CartItem> cartItems = find(conditionBuilder);
 
         return cartItems;
@@ -45,8 +45,8 @@ public class CartItemManager extends Manager<CartItem> {
      */
     public List<CartItem> find(User user, Visualisation visualisation, Integer limit) {
         List<Long> cartIds = Managers.getShoppingCartManager().findIdsByUser(user);
-        ConditionBuilder conditionBuilder = new ConditionBuilder().where(Tables.CartItem.VISUALISATION, visualisation)
-                .in(Tables.CartItem.SHOPPING_CART_ID, cartIds);
+        ConditionBuilder conditionBuilder = new ConditionBuilder().where(CartItem.VISUALISATION, visualisation)
+                .in(CartItem.SHOPPING_CART_ID, cartIds);
         if (limit != null) {
             conditionBuilder.limit(limit);
         }

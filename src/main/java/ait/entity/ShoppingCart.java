@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Amit on 4/27/16.
  */
-public class ShoppingCart extends IdEntity implements Tables.User {
+public class ShoppingCart extends IdEntity implements Tables.ShoppingCart {
 
     public ShoppingCart() {
     }

@@ -1,11 +1,12 @@
 package ait.entity;
 
 import ait.db.Column;
+import ait.db.Tables;
 
 /**
  * Created by suomiy on 5/11/16.
  */
-public class CartItem extends IdEntity {
+public class CartItem extends IdEntity implements Tables.CartItem {
     public CartItem() {
     }
 
