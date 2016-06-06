@@ -2,7 +2,6 @@ package ait.db;
 
 import ait.entity.IdEntity;
 import com.rits.cloning.Cloner;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.sql.*;
 import java.util.*;
@@ -38,8 +37,8 @@ public class Manager<E extends IdEntity> {
      * Create entity in the database.
      *
      * @param entity entity
-     * @throws DbException
      * @return newly created entity with the id
+     * @throws DbException
      */
     public E create(E entity) throws DbException {
         checkNotNull(entity);
@@ -72,9 +71,58 @@ public class Manager<E extends IdEntity> {
         return result;
     }
 
+    /**
+     * updates entity
+     *
+     * @param entity entity
+     * @throws DbException
+     */
     public void update(E entity) throws DbException {
-        //TODO:
-        throw new NotImplementedException();
+        checkNotNull(entity);
+        checkNotNull(entity.getId());
+
+        ConditionBuilder conditionBuilder = new ConditionBuilder().id(entity.getId());
+        update(entity, conditionBuilder);
+    }
+
+    /**
+     * uses fields of this entity to update table of this entity upon given condition
+     *
+     * @param entity           entity to use values of
+     * @param conditionBuilder condition for updating
+     * @throws DbException
+     */
+
+    public void update(E entity, ConditionBuilder conditionBuilder) throws DbException {
+        checkNotNull(entity);
+        checkNotNull(entity.getId());
+
+        LinkedHashMap<String, Object> columnsData = Utils.getColumnsData(entity);
+        List<Map.Entry<String, Object>> columnsEntries = new ArrayList<>(columnsData.entrySet()).stream()
+                .filter(e -> !e.getKey().equals(ID_COLUMN))
+                .collect(Collectors.toList());
+
+        List<Object> columnValues = columnsEntries.stream().map(Map.Entry::getValue)
+                .collect(Collectors.toList());
+        LinkedHashSet<String> columnNames = columnsEntries.stream().map(Map.Entry::getKey)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+
+        String createQuery = buildUpdateQuery(columnNames, conditionBuilder);
+
+        if (conditionBuilder != null && conditionBuilder.getConditionArgs().size() > 0) {
+            columnValues.addAll(conditionBuilder.getConditionArgs());
+        }
+
+        try (Connection con = Database.getConnection();
+             PreparedStatement statement = con.prepareStatement(createQuery)) {
+            setStatementValues(statement, columnValues);
+            if (statement.executeUpdate() == 0) {
+                log.warning(String.format("Update of %s with an id %d failed", CLASS_NAME, entity.getId()));
+            }
+            log.warning("update!");
+        } catch (SQLException ex) {
+            throw new DbException(ex);
+        }
     }
 
     /**
@@ -211,10 +259,7 @@ public class Manager<E extends IdEntity> {
      * @return query to select the entities.
      */
     private String buildSelectQuery(ConditionBuilder conditionBuilder) {
-        String condition = "";
-        if (conditionBuilder != null && conditionBuilder.getConditionArgs().size() > 0) {
-            condition = String.format(" WHERE %s", conditionBuilder.getCondition());
-        }
+        String condition = getConditionQuery(conditionBuilder);
         return String.format("SELECT * FROM %s.%s%s", Tables.SCHEMA_NAME, TABLE, condition);
     }
 
@@ -251,14 +296,50 @@ public class Manager<E extends IdEntity> {
             if (cnHasNext) {
                 querySb.append(", ");
                 valuesSb.append(", ");
-            } else {
-                querySb.append(") ");
-                valuesSb.append(")");
-                querySb.append(valuesSb);
             }
         }
 
-        return querySb.toString();
+        valuesSb.append(")");
+        return querySb.append(") ").append(valuesSb).toString();
+    }
+
+    /**
+     * Creates sql statement similar to this "UPDATE public.user set name=?,email=? WHERE id=?";
+     *
+     * @param columnNames set of column names
+     * @return create query
+     */
+    private String buildUpdateQuery(Set<String> columnNames, ConditionBuilder conditionBuilder) {
+        StringBuilder querySb = new StringBuilder();
+
+        if (columnNames.size() == 0) {
+            throw new IllegalArgumentException("empty object");
+        }
+
+        querySb.append(String.format("UPDATE %s.%s SET ", Tables.SCHEMA_NAME, TABLE));
+
+        Iterator<String> cnIterator = columnNames.iterator();
+
+        boolean cnHasNext = cnIterator.hasNext();
+        while (cnHasNext) {
+            querySb.append(cnIterator.next()).append("=?");
+
+            cnHasNext = cnIterator.hasNext();
+            if (cnHasNext) {
+                querySb.append(", ");
+            }
+        }
+
+        String conditionQuery = getConditionQuery(conditionBuilder);
+        return querySb.append(conditionQuery).append(';').toString();
+    }
+
+    private String getConditionQuery(ConditionBuilder conditionBuilder) {
+        String condition = "";
+        if (conditionBuilder != null && conditionBuilder.getConditionArgs().size() > 0) {
+            condition = String.format(" WHERE %s", conditionBuilder.getCondition());
+        }
+        return condition;
     }
 }
 

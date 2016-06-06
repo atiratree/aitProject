@@ -22,7 +22,6 @@ public class LoginUtils {
 
     public static final String USER_ATTR = "USER_ATTR";
     public static final String LOGGED_IN_ATTR = "LOGGED_IN_ATTR";
-    public static final String TOKEN = "TOKEN";
     public static final String USERNAME_ATTR = "USERNAME_ATTR";
 
     public static final String SIGNING_UP_ATTR = "SIGNING_UP_ATTR";
