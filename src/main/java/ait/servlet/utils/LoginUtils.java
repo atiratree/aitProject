@@ -77,7 +77,7 @@ public class LoginUtils {
             String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
             User user = new User(email, name, surname, hashed);
             try {
-                Managers.getUserManager().create(user);
+                user = Managers.getUserManager().create(user);
                 login(request, response, user);
             } catch (DbException e) {
                 result = false;
